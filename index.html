@@ -20,29 +20,30 @@ body {
   -webkit-font-smoothing: antialiased; min-height: 100vh;
 }
 button { font-family: inherit; border: none; background: none; padding: 0; margin: 0; cursor: pointer; color: inherit; }
+input { font-family: inherit; }
 
 /* ── splash ── */
 #splash { position: fixed; inset: 0; z-index: 50; background: #0f1013; display: flex; flex-direction: column;
   align-items: center; justify-content: center; transition: opacity .55s ease, visibility .55s; }
 #splash.exit { opacity: 0; visibility: hidden; }
-.word { position: relative; display: flex; padding: 10px 16px; }
-.ltr { color: #dcdee3; font-size: 58px; font-weight: 800; letter-spacing: .005em; display: inline-block; opacity: 0; }
+.word { position: relative; display: flex; padding: 8px 14px; transform: scaleY(.88); }
+.ltr { color: #dcdee3; font-size: 47px; font-weight: 800; letter-spacing: -.018em; display: inline-block; opacity: 0; }
 .ltr.in  { animation: lIn .62s cubic-bezier(.2,.7,.2,1) both; }
 .ltr.out { animation: lOut .45s cubic-bezier(.55,0,.8,.4) both; }
-@keyframes lIn  { from { opacity: 0; transform: translateY(30px) scale(.95); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
-@keyframes lOut { from { opacity: 1; transform: none; filter: blur(0); } to { opacity: 0; transform: translateY(-26px); filter: blur(8px); } }
-.shine { position: absolute; top: 10px; left: 16px; right: 16px; bottom: 10px;
+@keyframes lIn  { from { opacity: 0; transform: translateY(26px) scale(.95); filter: blur(10px); } to { opacity: 1; transform: none; filter: blur(0); } }
+@keyframes lOut { from { opacity: 1; transform: none; filter: blur(0); } to { opacity: 0; transform: translateY(-22px); filter: blur(8px); } }
+.shine { position: absolute; top: 8px; left: 14px; right: 14px; bottom: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 58px; font-weight: 800; letter-spacing: .005em; white-space: pre;
+  font-size: 47px; font-weight: 800; letter-spacing: -.018em; white-space: pre;
   background-image: linear-gradient(100deg, rgba(255,255,255,0) 40%, rgba(255,255,255,.55) 47%,
     rgba(255,255,255,1) 50%, rgba(255,255,255,.55) 53%, rgba(255,255,255,0) 60%);
   background-size: 260% 100%; background-repeat: no-repeat;
   -webkit-background-clip: text; background-clip: text;
   -webkit-text-fill-color: transparent; color: transparent;
-  filter: drop-shadow(0 0 9px rgba(255,255,255,.45));
+  filter: drop-shadow(0 0 8px rgba(255,255,255,.45));
   animation: sweep 1.15s cubic-bezier(.4,0,.4,1) both; pointer-events: none; }
 @keyframes sweep { from { background-position: -80% 0; } to { background-position: 210% 0; } }
-.sub { margin-top: 16px; color: #6d6f76; font-size: 11px; font-weight: 600; letter-spacing: .55em;
+.sub { margin-top: 15px; color: #6d6f76; font-size: 10.5px; font-weight: 600; letter-spacing: .55em;
   text-indent: .55em; opacity: 0; transition: opacity .5s ease; }
 .sub.show { opacity: 1; }
 
@@ -83,16 +84,18 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
 .day:active { transform: scale(.9); }
 .day .num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .day.today .num { background: #17181c; color: #fff; box-shadow: 3px 3px 7px #c3c4c9; }
-.dots { display: flex; gap: 3px; height: 5px; }
-.dot { width: 5px; height: 5px; border-radius: 50%; }
+.dots { display: flex; gap: 3px; height: 6px; align-items: center; }
+.dot { width: 5px; height: 5px; border-radius: 50%; flex: none; }
 .dot.r { background: #17181c; }
 .dot.v { background: #a3a6ad; }
+.dot.i { background: transparent; box-shadow: inset 0 0 0 1.6px #17181c; width: 6px; height: 6px; }
 
 /* ── summary ── */
-.sumrow { display: flex; gap: 12px; margin-bottom: 16px; }
-.sumbox { flex: 1; border-radius: 18px; padding: 15px; }
+.sumrow { display: flex; gap: 12px; margin-bottom: 12px; }
+.sumbox { flex: 1; border-radius: 18px; padding: 15px; min-width: 0; }
 .sumbox .lab { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-.sumbox .val { font-size: 23px; font-weight: 800; color: #17181c; }
+.sumbox .val { font-size: 22px; font-weight: 800; color: #17181c; }
+.sumwide { border-radius: 18px; padding: 15px; margin-bottom: 16px; display: flex; align-items: flex-end; justify-content: space-between; }
 .sumfoot { display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 600; color: #5c5e66; }
 .sumfoot b { color: #17181c; }
 
@@ -103,7 +106,7 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
 #sheet { position: fixed; left: 0; right: 0; bottom: 0; z-index: 41; max-width: 480px; margin: 0 auto;
   background: #e9eaee; border-radius: 26px 26px 0 0; box-shadow: 0 -14px 44px rgba(20,21,26,.28);
   transform: translateY(105%); transition: transform .38s cubic-bezier(.32,.72,.25,1);
-  max-height: 88vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+  max-height: 90vh; overflow-y: auto; -webkit-overflow-scrolling: touch;
   padding: 10px 20px calc(26px + env(safe-area-inset-bottom,0px)); }
 #sheet.open { transform: translateY(0); }
 .grab { width: 38px; height: 5px; border-radius: 3px; background: #c8c9cf; margin: 4px auto 14px; }
@@ -111,22 +114,31 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
 .sdate { font-size: 20px; font-weight: 800; color: #17181c; }
 .x { width: 34px; height: 34px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
   color: #8b8d95; font-size: 15px; }
-.seg { display: flex; gap: 6px; padding: 6px; border-radius: 16px; margin-bottom: 18px; }
-.seg button { flex: 1; padding: 11px 0; border-radius: 11px; font-size: 13.5px; font-weight: 700; color: #5c5e66; transition: all .18s ease; }
-.chips { display: flex; gap: 12px; margin-bottom: 18px; }
-.chip { flex: 1; padding: 11px 0; border-radius: 13px; font-size: 13.5px; font-weight: 700; color: #5c5e66; transition: all .18s ease; }
+.seg { display: flex; gap: 5px; padding: 5px; border-radius: 16px; margin-bottom: 18px; }
+.seg button { flex: 1; padding: 11px 2px; border-radius: 11px; font-size: 12px; font-weight: 700; color: #5c5e66; transition: all .18s ease; }
+.chips { display: flex; gap: 10px; margin-bottom: 18px; }
+.chips.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.chip { padding: 12px 4px; border-radius: 13px; font-size: 12.5px; font-weight: 700; color: #5c5e66; transition: all .18s ease; text-align: center; }
+.chips:not(.grid2) .chip { flex: 1; }
 .entries { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 .entry { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; }
-.entry .name { flex: 1; font-size: 13.5px; font-weight: 600; }
-.entry .name span { color: #8b8d95; }
-.entry .h { font-size: 13.5px; font-weight: 800; color: #17181c; }
-.entry .del { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b8d95; font-size: 14px; }
+.entry .name { flex: 1; font-size: 13.5px; font-weight: 600; min-width: 0; }
+.entry .name span { color: #8b8d95; font-weight: 500; }
+.entry .h { font-size: 13.5px; font-weight: 800; color: #17181c; white-space: nowrap; }
+.entry .del { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b8d95; font-size: 14px; flex: none; }
+.fld { width: 100%; border: none; outline: none; border-radius: 14px; padding: 14px 16px; font-size: 15px;
+  font-weight: 600; color: #17181c; background: #e5e6eb; box-shadow: inset 4px 4px 8px #c9cace, inset -4px -4px 8px #fff;
+  margin-bottom: 18px; -webkit-appearance: none; }
+.fld::placeholder { color: #a3a5ad; font-weight: 500; }
+.amtwrap { position: relative; margin-bottom: 18px; }
+.amtwrap .cur { position: absolute; left: 16px; top: 50%; transform: translateY(-50%); font-size: 15px; font-weight: 700; color: #8b8d95; pointer-events: none; }
+.amtwrap .fld { margin-bottom: 0; padding-left: 34px; }
 .hrow { display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px; }
-.hleft { display: flex; align-items: center; gap: 16px; }
-.step { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #2b2c31; }
+.hleft { display: flex; align-items: center; gap: 14px; }
+.step { width: 48px; height: 48px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #2b2c31; flex: none; }
 .step:disabled { opacity: .35; }
 .step:disabled:active { transform: none; box-shadow: 4px 4px 9px #cbccd1, -4px -4px 9px #fff; }
-.hval { font-size: 29px; font-weight: 800; color: #17181c; width: 66px; text-align: center; font-variant-numeric: tabular-nums; }
+.hval { font-size: 26px; font-weight: 800; color: #17181c; min-width: 92px; text-align: center; font-variant-numeric: tabular-nums; }
 .hright { text-align: right; }
 .hleft-lbl { font-size: 13px; font-weight: 700; color: #17181c; }
 .add { width: 100%; border-radius: 17px; padding: 16px 0; font-size: 13.5px; font-weight: 700; margin-top: 14px;
@@ -134,7 +146,7 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
   transition: transform .12s ease, box-shadow .16s ease; }
 .add:active { transform: scale(.98); box-shadow: 3px 3px 8px #c5c6cb, -3px -3px 8px #fff; }
 .add:disabled { background: #d6d7dc; color: #9a9ba2; box-shadow: none; transform: none; }
-.mb8 { margin-bottom: 8px; } .mb18 { margin-bottom: 18px; }
+.mb8 { margin-bottom: 8px; }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -158,11 +170,16 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
   <div class="card neu" style="padding:20px">
     <div class="cap" style="margin-bottom:16px">This month</div>
     <div class="sumrow">
-      <div class="sumbox neu-in"><div class="lab"><span class="dot r"></span><span class="cap" style="font-size:9.5px">Research</span></div><div class="val" id="sR">0h</div></div>
-      <div class="sumbox neu-in"><div class="lab"><span class="dot v"></span><span class="cap" style="font-size:9.5px">Videography</span></div><div class="val" id="sV">0h</div></div>
+      <div class="sumbox neu-in"><div class="lab"><span class="dot r"></span><span class="cap" style="font-size:9.5px">Research</span></div><div class="val" id="sR">0m</div></div>
+      <div class="sumbox neu-in"><div class="lab"><span class="dot v"></span><span class="cap" style="font-size:9.5px">Videography</span></div><div class="val" id="sV">0m</div></div>
+    </div>
+    <div class="sumwide neu-in">
+      <div><div class="lab" style="display:flex;align-items:center;gap:7px;margin-bottom:5px"><span class="dot i"></span><span class="cap" style="font-size:9.5px">Unexpected income</span></div>
+      <div class="val" style="font-size:22px;font-weight:800;color:#17181c" id="sI">&euro;0</div></div>
+      <div class="cap" id="sIn" style="padding-bottom:3px">0 entries</div>
     </div>
     <div class="sumfoot">
-      <span>Anna <b id="sA">0h</b> · Lina <b id="sL">0h</b></span>
+      <span>Anna <b id="sA">0m</b> &middot; Lina <b id="sL">0m</b></span>
       <span id="sD">0 days</span>
     </div>
   </div>
@@ -179,13 +196,42 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
   var KEY = "cally-worklog-v1";
   var LETTERS = ["C","A","L","L","Y"];
   var PEOPLE = ["Anna","Lina"];
-  var TYPES = { research:{label:"Research",max:2}, video:{label:"Videography",max:6} };
+  var METHODS = ["Crypto","Transaction","Bank transfer","Cash"];
+  var TYPES = {
+    research: { label: "Research",    short: "Research",    max: 120 },
+    video:    { label: "Videography", short: "Videography", max: 360 },
+    income:   { label: "Unexpected income", short: "Income" }
+  };
   var WD = ["M","T","W","T","F","S","S"];
+  /* 10-minute steps up to 50m, then 30-minute steps */
+  var LADDER = [10,20,30,40,50,60,90,120,150,180,210,240,270,300,330,360];
+  var CUR = "\u20AC";
 
   var pad = function (n) { return String(n).padStart(2,"0"); };
   var keyOf = function (y,m,d) { return y + "-" + pad(m+1) + "-" + pad(d); };
-  var fmtH = function (h) { return (h % 1 === 0 ? h : h.toFixed(1)) + "h"; };
   var el = function (id) { return document.getElementById(id); };
+  var esc = function (s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c];
+    });
+  };
+  function fmtM(m) {
+    m = Math.round(m || 0);
+    if (m < 60) return m + "m";
+    var h = Math.floor(m / 60), r = m % 60;
+    return r ? h + "h " + r + "m" : h + "h";
+  }
+  /* the step values you pick are shown as decimals: 0.1 = 10 min, 2.5 = 2:30 */
+  var STEP_LABEL = {
+    10:"0.1", 20:"0.2", 30:"0.3", 40:"0.4", 50:"0.5",
+    60:"1.0", 90:"1.5", 120:"2.0", 150:"2.5", 180:"3.0",
+    210:"3.5", 240:"4.0", 270:"4.5", 300:"5.0", 330:"5.5", 360:"6.0"
+  };
+  function fmtStep(m) { return STEP_LABEL[m] || fmtM(m); }
+  function fmtMoney(n) {
+    n = Number(n) || 0;
+    return CUR + (n % 1 === 0 ? n.toLocaleString("en-US") : n.toFixed(2));
+  }
 
   /* ── state ── */
   var now = new Date();
@@ -193,12 +239,23 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
   var view = { y: now.getFullYear(), m: now.getMonth() };
   var entries = {};
   var sheetKey = null;
-  var form = { type: "research", person: null, hours: 1 };
+  var form = { type: "research", person: null, mins: 60, source: "", method: null, amount: "" };
 
   try {
     var raw = localStorage.getItem(KEY);
-    if (raw) entries = JSON.parse(raw);
+    if (raw) entries = JSON.parse(raw) || {};
   } catch (e) { entries = {}; }
+
+  /* migrate old decimal-hour entries to minutes */
+  (function migrate() {
+    var changed = false;
+    Object.keys(entries).forEach(function (k) {
+      (entries[k] || []).forEach(function (e) {
+        if (e.mins == null && e.hours != null) { e.mins = Math.round(e.hours * 60); delete e.hours; changed = true; }
+      });
+    });
+    if (changed) save();
+  })();
 
   function save() {
     try { localStorage.setItem(KEY, JSON.stringify(entries)); }
@@ -213,7 +270,6 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
     s.style.animationDelay = (i * 130) + "ms";
     word.appendChild(s);
   });
-
   setTimeout(function () {
     el("sub").classList.add("show");
     var sh = document.createElement("span");
@@ -221,7 +277,6 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
     sh.setAttribute("aria-hidden","true");
     word.appendChild(sh);
   }, 1250);
-
   setTimeout(function () {
     var sh = word.querySelector(".shine");
     if (sh) sh.remove();
@@ -231,14 +286,13 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
       c.style.animationDelay = (i * 85) + "ms";
     });
   }, 2350);
-
-  setTimeout(function () { el("splash").classList.add("exit"); }, 3050);
   setTimeout(function () {
+    el("splash").classList.add("exit");
     el("stage").classList.add("on");
-    var sp = el("splash"); if (sp) sp.remove();
   }, 3050);
+  setTimeout(function () { var sp = el("splash"); if (sp) sp.remove(); }, 3650);
 
-  /* ── nav ── */
+  /* ── icons ── */
   function svgChevron(dir) {
     return '<svg width="15" height="15" viewBox="0 0 24 24" fill="none"><path d="' +
       (dir === "l" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7") +
@@ -258,18 +312,16 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
     render();
   }
 
-  /* ── weekday row (static) ── */
   el("wdrow").innerHTML = WD.map(function (w) { return '<div class="wd">' + w + "</div>"; }).join("");
 
-  /* ── render ── */
+  /* ── main render ── */
   function render() {
     var d1 = new Date(view.y, view.m, 1);
     el("mname").textContent = d1.toLocaleString("en-US", { month: "long" });
     el("myear").textContent = view.y;
 
     var isCur = view.y === now.getFullYear() && view.m === now.getMonth();
-    var nav = el("nav");
-    nav.innerHTML =
+    el("nav").innerHTML =
       (isCur ? "" : '<button class="today-btn neu-sm press" id="btnToday">Today</button>') +
       '<button class="rnd neu-sm press" id="btnPrev" aria-label="Previous month">' + svgChevron("l") + "</button>" +
       '<button class="rnd neu-sm press" id="btnNext" aria-label="Next month">' + svgChevron("r") + "</button>";
@@ -286,90 +338,118 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
       (function (dd) {
         var k = keyOf(view.y, view.m, dd);
         var list = entries[k] || [];
-        var hasR = list.some(function (e) { return e.type === "research"; });
-        var hasV = list.some(function (e) { return e.type === "video"; });
+        var has = function (t) { return list.some(function (e) { return e.type === t; }); };
         var b = document.createElement("button");
         b.className = "day" + (k === todayKey ? " today" : "");
         b.innerHTML = '<span class="num">' + dd + '</span><span class="dots">' +
-          (hasR ? '<span class="dot r"></span>' : "") +
-          (hasV ? '<span class="dot v"></span>' : "") + "</span>";
+          (has("research") ? '<span class="dot r"></span>' : "") +
+          (has("video") ? '<span class="dot v"></span>' : "") +
+          (has("income") ? '<span class="dot i"></span>' : "") + "</span>";
         b.onclick = function () { openSheet(k); };
         days.appendChild(b);
       })(d);
     }
 
     var pre = view.y + "-" + pad(view.m + 1);
-    var R = 0, V = 0, A = 0, L = 0, act = 0;
+    var R = 0, V = 0, A = 0, L = 0, I = 0, IN = 0, act = 0;
     Object.keys(entries).forEach(function (k) {
       if (k.indexOf(pre) !== 0) return;
       var list = entries[k];
-      if (!list.length) return;
+      if (!list || !list.length) return;
       act++;
       list.forEach(function (e) {
-        if (e.type === "research") R += e.hours;
-        else { V += e.hours; if (e.person === "Anna") A += e.hours; if (e.person === "Lina") L += e.hours; }
+        if (e.type === "research") R += e.mins;
+        else if (e.type === "video") {
+          V += e.mins;
+          if (e.person === "Anna") A += e.mins;
+          if (e.person === "Lina") L += e.mins;
+        } else { I += Number(e.amount) || 0; IN++; }
       });
     });
-    el("sR").textContent = fmtH(R);
-    el("sV").textContent = fmtH(V);
-    el("sA").textContent = fmtH(A);
-    el("sL").textContent = fmtH(L);
+    el("sR").textContent = fmtM(R);
+    el("sV").textContent = fmtM(V);
+    el("sA").textContent = fmtM(A);
+    el("sL").textContent = fmtM(L);
+    el("sI").textContent = fmtMoney(I);
+    el("sIn").textContent = IN + (IN === 1 ? " entry" : " entries");
     el("sD").textContent = act + (act === 1 ? " day active" : " days active");
   }
 
   /* ── sheet ── */
   function openSheet(k) {
     sheetKey = k;
-    form = { type: "research", person: null, hours: 1 };
+    form = { type: "research", person: null, mins: 60, source: "", method: null, amount: "" };
     renderSheet();
     el("backdrop").classList.add("open");
     requestAnimationFrame(function () { el("sheet").classList.add("open"); });
   }
-
   function closeSheet() {
     el("sheet").classList.remove("open");
     el("backdrop").classList.remove("open");
+    if (document.activeElement && document.activeElement.blur) document.activeElement.blur();
     setTimeout(function () { sheetKey = null; el("sheet").innerHTML = ""; }, 380);
   }
-
   el("backdrop").onclick = closeSheet;
 
-  function totalsFor(k) {
-    var t = { research: 0, video: 0 };
-    (entries[k] || []).forEach(function (e) { t[e.type] += e.hours; });
-    return t;
+  function usedMins(k, type) {
+    var s = 0;
+    (entries[k] || []).forEach(function (e) { if (e.type === type) s += e.mins || 0; });
+    return s;
+  }
+  function snap(mins, remaining) {
+    var best = 0;
+    LADDER.forEach(function (v) { if (v <= remaining && v <= mins) best = v; });
+    if (!best) { LADDER.forEach(function (v) { if (!best && v <= remaining) best = v; }); }
+    return best;
   }
 
   function renderSheet() {
     var k = sheetKey;
     if (!k) return;
     var list = entries[k] || [];
-    var t = totalsFor(k);
-    var max = TYPES[form.type].max;
-    var remaining = Math.max(0, Math.round((max - t[form.type]) * 2) / 2);
-    if (form.hours > remaining) form.hours = remaining >= 0.5 ? remaining : 0.5;
+    var isIncome = form.type === "income";
 
-    var capped = remaining < 0.5;
+    var remaining = 0, capped = false, max = 0;
+    if (!isIncome) {
+      max = TYPES[form.type].max;
+      remaining = Math.max(0, max - usedMins(k, form.type));
+      capped = remaining < LADDER[0];
+      if (!capped) form.mins = snap(form.mins, remaining) || LADDER[0];
+    }
+
+    var amt = parseFloat(form.amount);
     var needP = form.type === "video" && !form.person;
-    var ok = !capped && !needP && form.hours <= remaining;
+    var ok = isIncome
+      ? (form.source.trim().length > 0 && !!form.method && amt > 0)
+      : (!capped && !needP && form.mins <= remaining && form.mins > 0);
 
     var p = k.split("-");
     var label = new Date(+p[0], +p[1] - 1, +p[2])
       .toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
     var html = '<div class="grab"></div>' +
-      '<div class="shead"><div><div class="cap" style="margin-bottom:4px">Log work</div>' +
+      '<div class="shead"><div><div class="cap" style="margin-bottom:4px">Log</div>' +
       '<div class="sdate">' + label + "</div></div>" +
       '<button class="x neu-sm press" id="shClose" aria-label="Close">&#10005;</button></div>';
 
     if (list.length) {
-      html += '<div class="cap mb8">Logged · ' + fmtH(t.research + t.video) + "</div>";
+      var tm = 0, ti = 0;
+      list.forEach(function (e) { if (e.type === "income") ti += Number(e.amount) || 0; else tm += e.mins || 0; });
+      html += '<div class="cap mb8">Logged &middot; ' + fmtM(tm) + (ti ? " &middot; " + fmtMoney(ti) : "") + "</div>";
       html += '<div class="entries">' + list.map(function (e) {
+        var dotc = e.type === "research" ? "r" : e.type === "video" ? "v" : "i";
+        var name, right;
+        if (e.type === "income") {
+          name = "Unexpected income <span>&middot; " + esc(e.source) + " &middot; " + esc(e.method) + "</span>";
+          right = fmtMoney(e.amount);
+        } else {
+          name = TYPES[e.type].label + (e.person ? " <span>&middot; " + esc(e.person) + "</span>" : "");
+          right = fmtStep(e.mins);
+        }
         return '<div class="entry neu-sm">' +
-          '<span class="dot ' + (e.type === "research" ? "r" : "v") + '" style="width:7px;height:7px"></span>' +
-          '<span class="name">' + TYPES[e.type].label +
-          (e.person ? " <span>· " + e.person + "</span>" : "") + "</span>" +
-          '<span class="h">' + fmtH(e.hours) + "</span>" +
+          '<span class="dot ' + dotc + '"></span>' +
+          '<span class="name">' + name + "</span>" +
+          '<span class="h">' + right + "</span>" +
           '<button class="del press neu-sm" data-del="' + e.id + '" aria-label="Delete entry">&#10005;</button>' +
           "</div>";
       }).join("") + "</div>";
@@ -377,7 +457,7 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
 
     html += '<div class="cap mb8">Type</div><div class="seg neu-in">' +
       Object.keys(TYPES).map(function (tk) {
-        return '<button data-type="' + tk + '" class="' + (form.type === tk ? "dark" : "") + '">' + TYPES[tk].label + "</button>";
+        return '<button data-type="' + tk + '" class="' + (form.type === tk ? "dark" : "") + '">' + TYPES[tk].short + "</button>";
       }).join("") + "</div>";
 
     if (form.type === "video") {
@@ -387,27 +467,49 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
         }).join("") + "</div>";
     }
 
-    html += '<div class="cap mb8">Hours</div><div class="hrow"><div class="hleft">' +
-      '<button class="step neu-sm press" id="minus"' + (form.hours <= 0.5 || capped ? " disabled" : "") + ' aria-label="Decrease hours">' + svgSign(false) + "</button>" +
-      '<div class="hval">' + (capped ? "&mdash;" : fmtH(form.hours)) + "</div>" +
-      '<button class="step neu-sm press" id="plus"' + (capped || form.hours + 0.5 > remaining ? " disabled" : "") + ' aria-label="Increase hours">' + svgSign(true) + "</button>" +
-      '</div><div class="hright"><div class="cap">Cap ' + max + "h</div>" +
-      '<div class="hleft-lbl" style="color:' + (capped ? "#8b8d95" : "#17181c") + '">' + fmtH(remaining) + " left</div></div></div>";
+    if (isIncome) {
+      html += '<div class="cap mb8">Source</div>' +
+        '<input class="fld" id="fSource" type="text" placeholder="Who or where it came from" value="' + esc(form.source) + '">';
+      html += '<div class="cap mb8">Type</div><div class="chips grid2">' +
+        METHODS.map(function (n) {
+          return '<button class="chip ' + (form.method === n ? "dark" : "neu-sm press") + '" data-method="' + n + '">' + n + "</button>";
+        }).join("") + "</div>";
+      html += '<div class="cap mb8">Amount</div><div class="amtwrap"><span class="cur">' + CUR + '</span>' +
+        '<input class="fld" id="fAmount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0" value="' + esc(form.amount) + '"></div>';
+    } else {
+      html += '<div class="cap mb8">Time</div><div class="hrow"><div class="hleft">' +
+        '<button class="step neu-sm press" id="minus"' + (capped || form.mins <= LADDER[0] ? " disabled" : "") + ' aria-label="Less time">' + svgSign(false) + "</button>" +
+        '<div class="hval">' + (capped ? "&mdash;" : fmtStep(form.mins)) + "</div>" +
+        '<button class="step neu-sm press" id="plus"' + (capped || !LADDER.some(function (v) { return v > form.mins && v <= remaining; }) ? " disabled" : "") + ' aria-label="More time">' + svgSign(true) + "</button>" +
+        '</div><div class="hright"><div class="cap">Cap ' + fmtM(max) + "</div>" +
+        '<div class="hleft-lbl" style="color:' + (capped ? "#8b8d95" : "#17181c") + '">' + fmtM(remaining) + " left</div></div></div>";
+    }
 
-    html += '<button class="add" id="addBtn"' + (ok ? "" : " disabled") + ">" +
-      (capped ? "Daily cap reached" : needP ? "Select who filmed" :
-        "Log " + fmtH(form.hours) + " · " + TYPES[form.type].label + (form.type === "video" && form.person ? " · " + form.person : "")) +
-      "</button>";
+    var btnLabel;
+    if (isIncome) {
+      btnLabel = !form.source.trim() ? "Add a source"
+        : !form.method ? "Select a type"
+        : !(amt > 0) ? "Enter an amount"
+        : "Log " + fmtMoney(amt) + " &middot; " + esc(form.method);
+    } else {
+      btnLabel = capped ? "Daily cap reached"
+        : needP ? "Select who filmed"
+        : "Log " + fmtStep(form.mins) + " &middot; " + TYPES[form.type].label + (form.person ? " &middot; " + form.person : "");
+    }
+    html += '<button class="add" id="addBtn"' + (ok ? "" : " disabled") + ">" + btnLabel + "</button>";
 
     var sh = el("sheet");
     sh.innerHTML = html;
 
     el("shClose").onclick = closeSheet;
     sh.querySelectorAll("[data-type]").forEach(function (b) {
-      b.onclick = function () { form.type = b.getAttribute("data-type"); renderSheet(); };
+      b.onclick = function () { form.type = b.getAttribute("data-type"); form.mins = 60; renderSheet(); };
     });
     sh.querySelectorAll("[data-person]").forEach(function (b) {
       b.onclick = function () { form.person = b.getAttribute("data-person"); renderSheet(); };
+    });
+    sh.querySelectorAll("[data-method]").forEach(function (b) {
+      b.onclick = function () { form.method = b.getAttribute("data-method"); renderSheet(); };
     });
     sh.querySelectorAll("[data-del]").forEach(function (b) {
       b.onclick = function () {
@@ -417,17 +519,52 @@ button { font-family: inherit; border: none; background: none; padding: 0; margi
         save(); renderSheet(); render();
       };
     });
-    el("minus").onclick = function () { form.hours = Math.max(0.5, form.hours - 0.5); renderSheet(); };
-    el("plus").onclick = function () { form.hours = form.hours + 0.5; renderSheet(); };
+
+    /* text inputs update state without re-rendering, so the keyboard stays up */
+    var src = el("fSource"), amtIn = el("fAmount");
+    if (src) src.oninput = function () { form.source = src.value; refreshBtn(); };
+    if (amtIn) amtIn.oninput = function () { form.amount = amtIn.value; refreshBtn(); };
+
+    var minus = el("minus"), plus = el("plus");
+    if (minus) minus.onclick = function () {
+      for (var i = LADDER.length - 1; i >= 0; i--) { if (LADDER[i] < form.mins) { form.mins = LADDER[i]; break; } }
+      renderSheet();
+    };
+    if (plus) plus.onclick = function () {
+      for (var i = 0; i < LADDER.length; i++) { if (LADDER[i] > form.mins && LADDER[i] <= remaining) { form.mins = LADDER[i]; break; } }
+      renderSheet();
+    };
+
+    function refreshBtn() {
+      var a = parseFloat(form.amount);
+      var good = form.source.trim().length > 0 && !!form.method && a > 0;
+      var btn = el("addBtn");
+      if (!btn) return;
+      btn.disabled = !good;
+      btn.innerHTML = !form.source.trim() ? "Add a source"
+        : !form.method ? "Select a type"
+        : !(a > 0) ? "Enter an amount"
+        : "Log " + fmtMoney(a) + " &middot; " + esc(form.method);
+    }
+
     el("addBtn").onclick = function () {
-      if (!ok) return;
+      var a = parseFloat(form.amount);
+      var good = isIncome
+        ? (form.source.trim().length > 0 && !!form.method && a > 0)
+        : ok;
+      if (!good) return;
       if (!entries[k]) entries[k] = [];
-      entries[k].push({
-        id: Date.now() + "-" + Math.random().toString(36).slice(2, 7),
-        type: form.type,
-        person: form.type === "video" ? form.person : null,
-        hours: form.hours
-      });
+      var rec = { id: Date.now() + "-" + Math.random().toString(36).slice(2,7), type: form.type };
+      if (isIncome) {
+        rec.source = form.source.trim();
+        rec.method = form.method;
+        rec.amount = Math.round(a * 100) / 100;
+      } else {
+        rec.mins = form.mins;
+        rec.person = form.type === "video" ? form.person : null;
+      }
+      entries[k].push(rec);
+      form.source = ""; form.method = null; form.amount = "";
       save(); renderSheet(); render();
     };
   }
