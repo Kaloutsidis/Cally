@@ -204,6 +204,14 @@ input { font-family: inherit; }
 .add:disabled { background: #d6d7dc; color: #9a9ba2; box-shadow: none; transform: none; }
 .mb8 { margin-bottom: 8px; }
 .seg button.dark, .chip.dark, .newsrc button.dark { color: #fff; }
+.bkrow { display: flex; gap: 10px; }
+.bk { flex: 1; padding: 14px 0; border-radius: 14px; font-size: 13px; font-weight: 700; color: #2b2c31; }
+.bk.dark { color: #fff; }
+.bknote { font-size: 12.5px; font-weight: 600; color: #5c5e66; line-height: 1.45; margin: 0 0 14px; }
+#toast { position: fixed; left: 50%; top: calc(16px + env(safe-area-inset-top,0px)); z-index: 60; transform: translate(-50%,-140%);
+  background: #17181c; color: #fff; font-size: 13px; font-weight: 700; padding: 11px 18px; border-radius: 999px;
+  box-shadow: 0 8px 24px rgba(20,21,26,.3); transition: transform .35s cubic-bezier(.32,.72,.25,1); white-space: nowrap; }
+#toast.show { transform: translate(-50%,0); }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -255,6 +263,8 @@ input { font-family: inherit; }
 
 <div id="backdrop"></div>
 <div id="sheet"></div>
+<div id="toast"></div>
+<input type="file" id="fRestore" class="hide">
 
 <script>
 (function () {
@@ -263,6 +273,7 @@ input { font-family: inherit; }
   /* ── constants ── */
   var KEY = "cally-worklog-v1";            /* same key: existing data is kept */
   var SKEY = "cally-settings-v1";
+  var BKEY = "cally-last-backup";
   var LETTERS = ["C","A","L","L","Y"];
   var INC = { expected: "Expected", unexpected: "Unexpected" };
   var DEFAULT_SOURCES = ["Work","Other"];
@@ -648,9 +659,16 @@ input { font-family: inherit; }
         '<div class="stat neu-in"><div class="cap" style="font-size:9px">Avg income / day</div><div class="val" style="margin-top:6px">' + fmtMoney(Math.round(s.inc / days * 100) / 100) + "</div></div>" +
         '<div class="stat neu-in"><div class="cap" style="font-size:9px">Biggest expense</div><div class="val" style="margin-top:6px">' + big + "</div></div>" +
         '<div class="stat neu-in"><div class="cap" style="font-size:9px">Days with spending</div><div class="val" style="margin-top:6px">' + s.spendDays + '<span style="font-size:13px;color:#8b8d95"> / ' + days + "</span></div></div>" +
-      "</div></div>";
+      "</div></div>" +
+
+      '<div class="card neu pad"><div class="cap" style="margin-bottom:10px">Backup</div>' +
+        '<p class="bknote">Your data lives only on this phone. Save a backup to Files &rarr; iCloud Drive. On a new phone, open Cally and tap Restore.</p>' +
+        '<div class="bkrow"><button class="bk dark" id="bkSave">Save backup</button><button class="bk neu-sm press" id="bkLoad">Restore</button></div>' +
+        '<div class="cnt" style="margin-top:12px">' + lastBackupText() + "</div></div>";
 
     el("ov").innerHTML = html;
+    el("bkSave").onclick = doBackup;
+    el("bkLoad").onclick = function () { var f = el("fRestore"); f.value = ""; f.click(); };
 
     var fc = el("fchart");
     if (fc) fc.querySelectorAll("[data-i]").forEach(function (b) {
@@ -665,6 +683,80 @@ input { font-family: inherit; }
       };
     });
   }
+
+  /* ── backup / restore ── */
+  function toast(msg) {
+    var t = el("toast");
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast.h); toast.h = setTimeout(function () { t.classList.remove("show"); }, 2600);
+  }
+  function lastBackupText() {
+    var t = null;
+    try { t = localStorage.getItem(BKEY); } catch (e) {}
+    if (!t) return "No backup saved from this phone yet";
+    var d = Math.floor((Date.now() - (+t)) / 864e5);
+    return "Last backup: " + (d <= 0 ? "today" : d === 1 ? "yesterday" : d + " days ago");
+  }
+  function doBackup() {
+    var name = "cally-backup-" + todayKey + ".json";
+    var json = JSON.stringify({ app: "cally", version: 1, exported: new Date().toISOString(), entries: entries, settings: settings });
+    function done() {
+      try { localStorage.setItem(BKEY, String(Date.now())); } catch (e) {}
+      render(); toast("Backup saved");
+    }
+    function download() {
+      var url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+      var a = document.createElement("a");
+      a.href = url; a.download = name; document.body.appendChild(a); a.click();
+      setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 1500);
+      done();
+    }
+    var file = null;
+    try { file = new File([json], name, { type: "application/json" }); } catch (e) {}
+    if (file && navigator.canShare && navigator.canShare({ files: [file] })) {
+      navigator.share({ files: [file], title: "Cally backup" }).then(done).catch(function (err) {
+        if (err && err.name === "AbortError") return;
+        download();
+      });
+    } else {
+      download();
+    }
+  }
+  function doRestore(file) {
+    var r = new FileReader();
+    r.onload = function () {
+      var d;
+      try { d = JSON.parse(r.result); } catch (e) { d = null; }
+      if (!d || d.app !== "cally" || !d.entries || typeof d.entries !== "object") { toast("That file isn't a Cally backup"); return; }
+      var added = 0;
+      Object.keys(d.entries).forEach(function (k) {
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(k) || !Array.isArray(d.entries[k])) return;
+        var cur = entries[k] || [];
+        var ids = {};
+        cur.forEach(function (e) { ids[String(e.id)] = 1; });
+        d.entries[k].forEach(function (e) {
+          if (!e || typeof e !== "object" || ids[String(e.id)]) return;
+          if (e.type === "income") e.type = "unexpected";
+          cur.push(e); ids[String(e.id)] = 1; added++;
+        });
+        if (cur.length) entries[k] = cur;
+      });
+      if (d.settings && Array.isArray(d.settings.sources)) {
+        d.settings.sources.forEach(function (s) {
+          if (typeof s === "string" && s && settings.sources.indexOf(s) < 0) addSource(s);
+        });
+      }
+      save(); saveSettings(); render();
+      toast(added ? "Restored " + added + (added === 1 ? " entry" : " entries") : "Already up to date");
+    };
+    r.onerror = function () { toast("Couldn't read that file"); };
+    r.readAsText(file);
+  }
+  el("fRestore").onchange = function () {
+    var f = el("fRestore").files && el("fRestore").files[0];
+    if (f) doRestore(f);
+  };
+  try { if (navigator.storage && navigator.storage.persist) navigator.storage.persist(); } catch (e) {}
 
   /* ── sheet ── */
   function openSheet(k) {
