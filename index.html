@@ -8,6 +8,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Cally">
 <meta name="theme-color" content="#e9eaee">
+<meta name="robots" content="noindex">
 <link rel="apple-touch-icon" href="icon-180.png">
 <link rel="icon" href="icon-180.png">
 <title>Cally</title>
@@ -51,7 +52,8 @@ input { font-family: inherit; }
 #stage { opacity: 0; display: flex; justify-content: center; }
 #stage.on { animation: appIn .7s cubic-bezier(.2,.7,.2,1) both; }
 @keyframes appIn { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: none; } }
-.wrap { width: 100%; max-width: 430px; padding: calc(34px + env(safe-area-inset-top,0px)) 20px calc(40px + env(safe-area-inset-bottom,0px)); }
+.wrap { width: 100%; max-width: 430px; padding: calc(34px + env(safe-area-inset-top,0px)) 20px calc(112px + env(safe-area-inset-bottom,0px)); }
+.hide { display: none !important; }
 
 /* ── depth ── */
 .neu { background: linear-gradient(145deg,#f2f3f7,#e2e3e8); box-shadow: 8px 8px 16px #c9cace, -8px -8px 16px #fff; }
@@ -76,6 +78,7 @@ input { font-family: inherit; }
 
 /* ── calendar ── */
 .card { border-radius: 24px; padding: 16px; margin-bottom: 22px; }
+.card.pad { padding: 20px; }
 .grid7 { display: grid; grid-template-columns: repeat(7,1fr); gap: 4px; }
 .wd { text-align: center; font-size: 10px; font-weight: 700; letter-spacing: .14em; color: #8b8d95; padding-bottom: 8px; }
 .day { position: relative; aspect-ratio: 1/1; border-radius: 16px; display: flex; flex-direction: column;
@@ -85,21 +88,73 @@ input { font-family: inherit; }
 .day .num { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 .day.today .num { background: #17181c; color: #fff; box-shadow: 3px 3px 7px #c3c4c9; }
 .dots { display: flex; gap: 3px; height: 6px; align-items: center; }
-.dot { width: 5px; height: 5px; border-radius: 50%; flex: none; }
+.dot { width: 5px; height: 5px; border-radius: 50%; flex: none; display: inline-block; }
 .dot.e { background: #17181c; }
 .dot.u { background: transparent; box-shadow: inset 0 0 0 1.6px #17181c; width: 6px; height: 6px; }
+.dot.o { background: #8b8d95; }
 
 /* ── summary ── */
 .sumrow { display: flex; gap: 12px; margin-bottom: 14px; }
 .sumbox { flex: 1; border-radius: 18px; padding: 15px; min-width: 0; }
 .sumbox .lab { display: flex; align-items: center; gap: 7px; margin-bottom: 5px; }
-.sumbox .val { font-size: 22px; font-weight: 800; color: #17181c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.sumbox .cnt { margin-top: 4px; font-size: 11.5px; font-weight: 600; color: #8b8d95; }
+.val { font-size: 22px; font-weight: 800; color: #17181c; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-variant-numeric: tabular-nums; }
+.cnt { margin-top: 4px; font-size: 11.5px; font-weight: 600; color: #8b8d95; }
 .split { display: flex; height: 10px; border-radius: 6px; overflow: hidden; margin-bottom: 16px; gap: 2px; }
 .split .se { background: #17181c; transition: flex-grow .4s ease; }
 .split .su { background: #a3a6ad; transition: flex-grow .4s ease; }
 .sumfoot { display: flex; align-items: center; justify-content: space-between; font-size: 13px; font-weight: 600; color: #5c5e66; }
 .sumfoot b { color: #17181c; }
+.sumwide { border-radius: 18px; padding: 15px; margin-bottom: 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 10px; }
+
+/* ── bar lists ── */
+.brow { margin-bottom: 12px; }
+.brow:last-child { margin-bottom: 0; }
+.btop { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 6px; }
+.bname { font-size: 13.5px; font-weight: 700; color: #17181c; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bval { font-size: 13.5px; font-weight: 800; color: #17181c; white-space: nowrap; font-variant-numeric: tabular-nums; }
+.bval i { font-style: normal; font-weight: 600; color: #8b8d95; margin-left: 4px; }
+.btrack { height: 8px; border-radius: 5px; overflow: hidden; }
+.bfill { height: 100%; background: #17181c; border-radius: 5px; transition: width .5s cubic-bezier(.2,.7,.2,1); }
+.empty { font-size: 13px; font-weight: 600; color: #a3a5ad; padding: 6px 0; }
+.ctitle { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+
+/* ── overview ── */
+.hero { text-align: left; }
+.hero .big { font-size: 40px; font-weight: 800; color: #17181c; letter-spacing: -.025em; line-height: 1.05; margin: 6px 0 6px; font-variant-numeric: tabular-nums; }
+.hero .hsub { font-size: 13px; font-weight: 600; color: #5c5e66; }
+.tiles { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 22px; }
+.tilebox { border-radius: 18px; padding: 13px 12px; min-width: 0; }
+.tilebox .val { font-size: 17px; }
+.tilebox .cnt { font-size: 10.5px; line-height: 1.35; }
+.legend { display: flex; gap: 14px; font-size: 11.5px; font-weight: 700; color: #5c5e66; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.sw { width: 9px; height: 9px; border-radius: 3px; display: inline-block; }
+.sw.i { background: #17181c; } .sw.o { background: #a3a6ad; }
+.readout { min-height: 36px; margin-bottom: 10px; font-size: 13px; font-weight: 600; color: #5c5e66; line-height: 1.4; }
+.readout b { color: #17181c; font-variant-numeric: tabular-nums; }
+.fchart { display: flex; gap: 2px; height: 160px; }
+.fc { flex: 1; min-width: 0; display: flex; flex-direction: column; padding: 0; transition: opacity .15s ease; }
+.fu { flex: 1; display: flex; align-items: flex-end; border-bottom: 1px solid #c4c5cb; }
+.fd { flex: 1; display: flex; align-items: flex-start; }
+.fbi { width: 100%; background: #17181c; border-radius: 3px 3px 0 0; }
+.fbe { width: 100%; background: #a3a6ad; border-radius: 0 0 3px 3px; }
+.fchart.sel .fc { opacity: .3; }
+.fchart.sel .fc.on { opacity: 1; }
+.xl { display: flex; gap: 2px; margin-top: 8px; }
+.xl span { flex: 1; min-width: 0; text-align: center; font-size: 10px; font-weight: 700; color: #8b8d95; overflow: visible; white-space: nowrap; }
+.stats { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.stat { border-radius: 16px; padding: 13px; min-width: 0; }
+.stat .val { font-size: 17px; }
+
+/* ── tab bar ── */
+.tabbar { position: fixed; left: 0; right: 0; bottom: 0; z-index: 30; display: flex; justify-content: center;
+  background: rgba(233,234,238,.92); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
+  box-shadow: 0 -6px 18px rgba(170,172,180,.28);
+  padding: 8px 16px calc(10px + env(safe-area-inset-bottom,0px)); }
+.tabbar .in { display: flex; gap: 6px; width: 100%; max-width: 430px; }
+.tab { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 8px 0 7px; border-radius: 15px;
+  font-size: 11px; font-weight: 700; color: #8b8d95; transition: color .18s ease; }
+.tab.on { color: #17181c; background: #e5e6eb; box-shadow: inset 3px 3px 7px #c9cace, inset -3px -3px 7px #fff; }
 
 /* ── sheet ── */
 #backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(15,16,20,.35);
@@ -119,15 +174,23 @@ input { font-family: inherit; }
 .seg { display: flex; gap: 5px; padding: 5px; border-radius: 16px; margin-bottom: 18px; }
 .seg button { flex: 1; padding: 11px 2px; border-radius: 11px; font-size: 12.5px; font-weight: 700; color: #5c5e66; transition: all .18s ease; }
 .chips { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 18px; }
-.chip { padding: 12px 4px; border-radius: 13px; font-size: 12.5px; font-weight: 700; color: #5c5e66; transition: all .18s ease; text-align: center; }
+.chip { padding: 12px 4px; border-radius: 13px; font-size: 12.5px; font-weight: 700; color: #5c5e66; transition: all .18s ease; text-align: center;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.chip.addc { color: #8b8d95; border: 1.5px dashed #b9bac1; background: transparent; box-shadow: none; }
+.chip.rm { color: #17181c; }
+.lrow { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 8px; }
+.lrow .lnk { font-size: 12px; font-weight: 700; color: #5c5e66; padding: 2px 4px; }
 .opt { text-transform: none; letter-spacing: 0; font-weight: 600; color: #a3a5ad; }
+.newsrc { display: flex; gap: 10px; margin-bottom: 18px; }
+.newsrc .fld { flex: 1; }
+.newsrc button { border-radius: 14px; padding: 0 18px; font-size: 13px; font-weight: 700; }
 .entries { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
 .entry { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 14px; }
 .entry .name { flex: 1; font-size: 13.5px; font-weight: 600; min-width: 0; }
 .entry .name span { color: #8b8d95; font-weight: 500; }
 .entry .h { font-size: 13.5px; font-weight: 800; color: #17181c; white-space: nowrap; }
 .entry .del { width: 26px; height: 26px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #8b8d95; font-size: 14px; flex: none; }
-.fld { width: 100%; border: none; outline: none; border-radius: 14px; padding: 14px 16px; font-size: 15px;
+.fld { width: 100%; border: none; outline: none; border-radius: 14px; padding: 14px 16px; font-size: 16px;
   font-weight: 600; color: #17181c; background: #e5e6eb; box-shadow: inset 4px 4px 8px #c9cace, inset -4px -4px 8px #fff;
   -webkit-appearance: none; }
 .fld::placeholder { color: #a3a5ad; font-weight: 500; }
@@ -140,6 +203,7 @@ input { font-family: inherit; }
 .add:active { transform: scale(.98); box-shadow: 3px 3px 8px #c5c6cb, -3px -3px 8px #fff; }
 .add:disabled { background: #d6d7dc; color: #9a9ba2; box-shadow: none; transform: none; }
 .mb8 { margin-bottom: 8px; }
+.seg button.dark, .chip.dark, .newsrc button.dark { color: #fff; }
 @media (prefers-reduced-motion: reduce) { * { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
 </style>
 </head>
@@ -147,7 +211,7 @@ input { font-family: inherit; }
 
 <div id="splash">
   <div class="word" id="word"></div>
-  <div class="sub" id="sub">INCOME</div>
+  <div class="sub" id="sub">MONEY</div>
 </div>
 
 <div id="stage"><div class="wrap">
@@ -156,12 +220,16 @@ input { font-family: inherit; }
     <div><div class="mname" id="mname"></div><div class="myear" id="myear"></div></div>
     <div class="nav" id="nav"></div>
   </div>
-  <div class="card neu">
+
+  <div class="seg neu-in hide" id="ovSeg"></div>
+
+  <div class="card neu" id="calCard">
     <div class="grid7" id="wdrow"></div>
     <div class="grid7" id="days"></div>
   </div>
-  <div class="card neu" style="padding:20px">
-    <div class="cap" style="margin-bottom:16px">This month</div>
+
+  <div class="card neu pad" id="incSum">
+    <div class="cap" style="margin-bottom:16px">Income this month</div>
     <div class="sumrow">
       <div class="sumbox neu-in">
         <div class="lab"><span class="dot e"></span><span class="cap" style="font-size:9.5px">Expected</span></div>
@@ -172,13 +240,18 @@ input { font-family: inherit; }
         <div class="val" id="sU">&euro;0</div><div class="cnt" id="sUn">0 entries</div>
       </div>
     </div>
-    <div class="split neu-in" id="split"><div class="se" id="barE" style="flex-grow:0"></div><div class="su" id="barU" style="flex-grow:0"></div></div>
+    <div class="split neu-in"><div class="se" id="barE" style="flex-grow:0"></div><div class="su" id="barU" style="flex-grow:0"></div></div>
     <div class="sumfoot">
       <span>Total <b id="sT">&euro;0</b></span>
       <span id="sD">0 days</span>
     </div>
   </div>
+
+  <div class="card neu pad hide" id="expSum"></div>
+  <div id="ov" class="hide"></div>
 </div></div>
+
+<nav class="tabbar" id="tabbar"><div class="in" id="tabs"></div></nav>
 
 <div id="backdrop"></div>
 <div id="sheet"></div>
@@ -189,11 +262,14 @@ input { font-family: inherit; }
 
   /* ── constants ── */
   var KEY = "cally-worklog-v1";            /* same key: existing data is kept */
+  var SKEY = "cally-settings-v1";
   var LETTERS = ["C","A","L","L","Y"];
-  var CATS = { expected: "Expected", unexpected: "Unexpected" };
-  var SOURCES = ["Work","OFM","Other"];
-  var METHODS = ["Cash","Bank transfer","Crypto","Transaction","Other"];
+  var INC = { expected: "Expected", unexpected: "Unexpected" };
+  var DEFAULT_SOURCES = ["Work","Other"];
+  var EXP_CATS = ["Food","Groceries","Transport","Bills","Shopping","Fun","Health","Subscriptions","Other"];
+  var METHODS = ["Cash","Card","Bank transfer","Crypto","Transaction","Other"];
   var WD = ["M","T","W","T","F","S","S"];
+  var MONTHS_S = ["J","F","M","A","M","J","J","A","S","O","N","D"];
   var CUR = "€";
 
   var pad = function (n) { return String(n).padStart(2,"0"); };
@@ -206,24 +282,40 @@ input { font-family: inherit; }
   };
   function fmtMoney(n) {
     n = Number(n) || 0;
-    return CUR + (n % 1 === 0 ? n.toLocaleString("en-US") : n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+    var neg = n < 0; n = Math.abs(n);
+    var s = n % 1 === 0 ? n.toLocaleString("en-US") : n.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    return (neg ? "−" : "") + CUR + s;
   }
-  var isMoney = function (e) { return e.type === "expected" || e.type === "unexpected"; };
+  var isInc = function (e) { return e.type === "expected" || e.type === "unexpected"; };
+  var isExp = function (e) { return e.type === "expense"; };
+  function plural(n, w) { return n + " " + w + (n === 1 ? "" : "s"); }
 
   /* ── state ── */
   var now = new Date();
   var todayKey = keyOf(now.getFullYear(), now.getMonth(), now.getDate());
   var view = { y: now.getFullYear(), m: now.getMonth() };
+  var tab = "income";
+  var period = "month";
   var entries = {};
+  var settings = {};
   var sheetKey = null;
   var form;
-  function resetForm(cat) { form = { cat: cat || "expected", source: null, method: null, amount: "" }; }
+  function resetForm(keep) {
+    form = { cat: (keep && keep.cat) || "expected", source: null, method: null, amount: "", category: null,
+      editSrc: false, adding: false };
+  }
   resetForm();
 
-  try {
-    var raw = localStorage.getItem(KEY);
-    if (raw) entries = JSON.parse(raw) || {};
-  } catch (e) { entries = {}; }
+  try { var raw = localStorage.getItem(KEY); if (raw) entries = JSON.parse(raw) || {}; } catch (e) { entries = {}; }
+  try { var rs = localStorage.getItem(SKEY); if (rs) settings = JSON.parse(rs) || {}; } catch (e) { settings = {}; }
+  try { var t0 = localStorage.getItem("cally-tab"); if (t0 === "income" || t0 === "expense" || t0 === "overview") tab = t0; } catch (e) {}
+
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(entries)); } catch (e) { console.error("Save failed", e); }
+  }
+  function saveSettings() {
+    try { localStorage.setItem(SKEY, JSON.stringify(settings)); } catch (e) {}
+  }
 
   /* migrate: old "income" entries become "unexpected". Old research/videography
      entries stay in storage untouched but are no longer shown. */
@@ -237,11 +329,21 @@ input { font-family: inherit; }
     if (changed) save();
   })();
 
-  function save() {
-    try { localStorage.setItem(KEY, JSON.stringify(entries)); }
-    catch (e) { console.error("Save failed", e); }
+  /* sources: start generic; anything already used on this device is kept as a button */
+  (function initSources() {
+    if (!Array.isArray(settings.sources)) settings.sources = DEFAULT_SOURCES.slice();
+    Object.keys(entries).forEach(function (k) {
+      (entries[k] || []).forEach(function (e) {
+        if (e.type === "unexpected" && e.source && settings.sources.indexOf(e.source) < 0) addSource(e.source);
+      });
+    });
+    if (settings.sources.indexOf("Other") < 0) settings.sources.push("Other");
+    saveSettings();
+  })();
+  function addSource(name) {
+    var i = settings.sources.indexOf("Other");
+    if (i < 0) settings.sources.push(name); else settings.sources.splice(i, 0, name);
   }
-  function moneyList(k) { return (entries[k] || []).filter(isMoney); }
 
   /* ── splash ── */
   var word = el("word");
@@ -279,32 +381,100 @@ input { font-family: inherit; }
       (dir === "l" ? "M15 5l-7 7 7 7" : "M9 5l7 7-7 7") +
       '" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   }
+  function svgPath(d) {
+    return '<svg width="21" height="21" viewBox="0 0 24 24" fill="none"><path d="' + d +
+      '" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  }
+  var TABS = [
+    { id: "income",   label: "Income",   icon: "M12 4v11M7 10l5 5 5-5M5 20h14" },
+    { id: "expense",  label: "Expenses", icon: "M12 15V4M7 9l5-5 5 5M5 20h14" },
+    { id: "overview", label: "Overview", icon: "M5 20v-7M12 20V5M19 20v-10" }
+  ];
 
+  /* ── navigation ── */
   function shift(d) {
+    if (tab === "overview" && period === "year") { view.y += d; render(); return; }
     var m = view.m + d;
     if (m < 0) { view.y--; view.m = 11; }
     else if (m > 11) { view.y++; view.m = 0; }
     else { view.m = m; }
     render();
   }
+  function setTab(t) {
+    tab = t;
+    try { localStorage.setItem("cally-tab", t); } catch (e) {}
+    render();
+    window.scrollTo(0, 0);
+  }
 
   el("wdrow").innerHTML = WD.map(function (w) { return '<div class="wd">' + w + "</div>"; }).join("");
 
+  /* ── data helpers ── */
+  function listFor(k) {
+    var all = entries[k] || [];
+    return all.filter(tab === "expense" ? isExp : isInc);
+  }
+  function collect(prefix) {
+    var s = { inc: 0, exp: 0, expd: 0, unexp: 0, incN: 0, expN: 0, cats: {}, srcs: {}, meth: {}, spendDays: 0, biggest: null };
+    Object.keys(entries).forEach(function (k) {
+      if (k.indexOf(prefix) !== 0) return;
+      var spent = false;
+      (entries[k] || []).forEach(function (e) {
+        var a = Number(e.amount) || 0;
+        if (isInc(e)) {
+          s.inc += a; s.incN++;
+          if (e.type === "expected") s.expd += a;
+          else { s.unexp += a; var src = e.source || "Unspecified"; s.srcs[src] = (s.srcs[src] || 0) + a; }
+        } else if (isExp(e)) {
+          s.exp += a; s.expN++; spent = true;
+          var c = e.category || "Other"; s.cats[c] = (s.cats[c] || 0) + a;
+          var m = e.method || "Unspecified"; s.meth[m] = (s.meth[m] || 0) + a;
+          if (!s.biggest || a > s.biggest.a) s.biggest = { a: a, k: k, c: c };
+        }
+      });
+      if (spent) s.spendDays++;
+    });
+    return s;
+  }
+  function monthPrefix(y, m) { return y + "-" + pad(m + 1); }
+  function monthName(m, len) { return new Date(2000, m, 1).toLocaleString("en-US", { month: len || "long" }); }
+
   /* ── main render ── */
   function render() {
+    var yearMode = tab === "overview" && period === "year";
     var d1 = new Date(view.y, view.m, 1);
-    el("mname").textContent = d1.toLocaleString("en-US", { month: "long" });
-    el("myear").textContent = view.y;
+    el("mname").textContent = yearMode ? String(view.y) : monthName(view.m);
+    el("myear").textContent = yearMode ? "Full year" : view.y;
 
-    var isCur = view.y === now.getFullYear() && view.m === now.getMonth();
+    var isCur = yearMode ? view.y === now.getFullYear() : (view.y === now.getFullYear() && view.m === now.getMonth());
     el("nav").innerHTML =
       (isCur ? "" : '<button class="today-btn neu-sm press" id="btnToday">Today</button>') +
-      '<button class="rnd neu-sm press" id="btnPrev" aria-label="Previous month">' + svgChevron("l") + "</button>" +
-      '<button class="rnd neu-sm press" id="btnNext" aria-label="Next month">' + svgChevron("r") + "</button>";
+      '<button class="rnd neu-sm press" id="btnPrev" aria-label="Previous">' + svgChevron("l") + "</button>" +
+      '<button class="rnd neu-sm press" id="btnNext" aria-label="Next">' + svgChevron("r") + "</button>";
     if (!isCur) el("btnToday").onclick = function () { view = { y: now.getFullYear(), m: now.getMonth() }; render(); };
     el("btnPrev").onclick = function () { shift(-1); };
     el("btnNext").onclick = function () { shift(1); };
 
+    el("tabs").innerHTML = TABS.map(function (t) {
+      return '<button class="tab' + (tab === t.id ? " on" : "") + '" data-tab="' + t.id + '">' + svgPath(t.icon) + "<span>" + t.label + "</span></button>";
+    }).join("");
+    el("tabs").querySelectorAll("[data-tab]").forEach(function (b) {
+      b.onclick = function () { setTab(b.getAttribute("data-tab")); };
+    });
+
+    el("calCard").classList.toggle("hide", tab === "overview");
+    el("incSum").classList.toggle("hide", tab !== "income");
+    el("expSum").classList.toggle("hide", tab !== "expense");
+    el("ov").classList.toggle("hide", tab !== "overview");
+    el("ovSeg").classList.toggle("hide", tab !== "overview");
+
+    if (tab !== "overview") renderCalendar(d1);
+    if (tab === "income") renderIncomeSummary();
+    if (tab === "expense") renderExpenseSummary();
+    if (tab === "overview") renderOverview();
+  }
+
+  function renderCalendar(d1) {
     var offset = (d1.getDay() + 6) % 7;
     var dim = new Date(view.y, view.m + 1, 0).getDate();
     var days = el("days");
@@ -313,40 +483,187 @@ input { font-family: inherit; }
     for (var d = 1; d <= dim; d++) {
       (function (dd) {
         var k = keyOf(view.y, view.m, dd);
-        var list = moneyList(k);
+        var list = entries[k] || [];
         var has = function (t) { return list.some(function (e) { return e.type === t; }); };
+        var dots = tab === "expense"
+          ? (has("expense") ? '<span class="dot o"></span>' : "")
+          : (has("expected") ? '<span class="dot e"></span>' : "") + (has("unexpected") ? '<span class="dot u"></span>' : "");
         var b = document.createElement("button");
         b.className = "day" + (k === todayKey ? " today" : "");
-        b.innerHTML = '<span class="num">' + dd + '</span><span class="dots">' +
-          (has("expected") ? '<span class="dot e"></span>' : "") +
-          (has("unexpected") ? '<span class="dot u"></span>' : "") + "</span>";
+        b.innerHTML = '<span class="num">' + dd + '</span><span class="dots">' + dots + "</span>";
         b.onclick = function () { openSheet(k); };
         days.appendChild(b);
       })(d);
     }
+  }
 
-    var pre = view.y + "-" + pad(view.m + 1);
-    var E = 0, U = 0, EN = 0, UN = 0, act = 0;
+  function renderIncomeSummary() {
+    var s = collect(monthPrefix(view.y, view.m));
+    var act = 0;
     Object.keys(entries).forEach(function (k) {
-      if (k.indexOf(pre) !== 0) return;
-      var list = moneyList(k);
-      if (!list.length) return;
-      act++;
-      list.forEach(function (e) {
-        var a = Number(e.amount) || 0;
-        if (e.type === "expected") { E += a; EN++; } else { U += a; UN++; }
-      });
+      if (k.indexOf(monthPrefix(view.y, view.m)) === 0 && (entries[k] || []).some(isInc)) act++;
     });
-    el("sE").textContent = fmtMoney(E);
-    el("sU").textContent = fmtMoney(U);
-    el("sEn").textContent = EN + (EN === 1 ? " entry" : " entries");
-    el("sUn").textContent = UN + (UN === 1 ? " entry" : " entries");
-    el("sT").textContent = fmtMoney(E + U);
+    var EN = 0, UN = 0;
+    Object.keys(entries).forEach(function (k) {
+      if (k.indexOf(monthPrefix(view.y, view.m)) !== 0) return;
+      (entries[k] || []).forEach(function (e) { if (e.type === "expected") EN++; else if (e.type === "unexpected") UN++; });
+    });
+    el("sE").textContent = fmtMoney(s.expd);
+    el("sU").textContent = fmtMoney(s.unexp);
+    el("sEn").textContent = plural(EN, "entry").replace("entrys", "entries");
+    el("sUn").textContent = plural(UN, "entry").replace("entrys", "entries");
+    el("sT").textContent = fmtMoney(s.inc);
     el("sD").textContent = act + (act === 1 ? " day logged" : " days logged");
-    el("barE").style.flexGrow = E;
-    el("barU").style.flexGrow = U;
-    el("barE").style.display = E > 0 ? "" : "none";
-    el("barU").style.display = U > 0 ? "" : "none";
+    el("barE").style.flexGrow = s.expd;
+    el("barU").style.flexGrow = s.unexp;
+    el("barE").style.display = s.expd > 0 ? "" : "none";
+    el("barU").style.display = s.unexp > 0 ? "" : "none";
+  }
+
+  function barList(obj, total, limit) {
+    var arr = Object.keys(obj).map(function (k) { return [k, obj[k]]; })
+      .filter(function (r) { return r[1] > 0; })
+      .sort(function (a, b) { return b[1] - a[1]; });
+    if (limit) arr = arr.slice(0, limit);
+    if (!arr.length) return '<div class="empty">Nothing logged yet</div>';
+    var max = arr[0][1];
+    return arr.map(function (r) {
+      var pct = total ? Math.round(r[1] / total * 100) : 0;
+      return '<div class="brow"><div class="btop"><span class="bname">' + esc(r[0]) + '</span>' +
+        '<span class="bval">' + fmtMoney(r[1]) + "<i>" + pct + "%</i></span></div>" +
+        '<div class="btrack neu-in"><div class="bfill" style="width:' + Math.max(2, r[1] / max * 100) + '%"></div></div></div>';
+    }).join("");
+  }
+
+  function elapsedDays() {
+    var dim = new Date(view.y, view.m + 1, 0).getDate();
+    if (view.y === now.getFullYear() && view.m === now.getMonth()) return now.getDate();
+    return dim;
+  }
+
+  function renderExpenseSummary() {
+    var s = collect(monthPrefix(view.y, view.m));
+    var avg = s.exp / elapsedDays();
+    el("expSum").innerHTML =
+      '<div class="cap" style="margin-bottom:16px">Spent this month</div>' +
+      '<div class="sumwide neu-in"><div><div class="val">' + fmtMoney(s.exp) + '</div>' +
+      '<div class="cnt">' + plural(s.expN, "expense") + " &middot; " + plural(s.spendDays, "day") + '</div></div>' +
+      '<div style="text-align:right"><div class="cap" style="font-size:9.5px">Per day</div>' +
+      '<div style="font-size:15px;font-weight:800;color:#17181c;margin-top:4px">' + fmtMoney(Math.round(avg * 100) / 100) + "</div></div></div>" +
+      '<div class="cap mb8" style="margin-bottom:12px">Top categories</div>' + barList(s.cats, s.exp, 4);
+  }
+
+  /* ── overview ── */
+  function changeLine(cur, prev, unit) {
+    if (!prev) return cur ? "New vs last " + unit : "&mdash;";
+    var p = Math.round((cur - prev) / prev * 100);
+    return (p > 0 ? "▲ " : p < 0 ? "▼ " : "") + Math.abs(p) + "% vs last " + unit;
+  }
+
+  function renderOverview() {
+    var yearMode = period === "year";
+    el("ovSeg").innerHTML = ["month","year"].map(function (p) {
+      return '<button data-period="' + p + '" class="' + (period === p ? "dark" : "") + '">' + (p === "month" ? "Month" : "Year") + "</button>";
+    }).join("");
+    el("ovSeg").querySelectorAll("[data-period]").forEach(function (b) {
+      b.onclick = function () { period = b.getAttribute("data-period"); render(); };
+    });
+
+    var prefix = yearMode ? view.y + "-" : monthPrefix(view.y, view.m);
+    var pv = view.m === 0 ? { y: view.y - 1, m: 11 } : { y: view.y, m: view.m - 1 };
+    var prevPrefix = yearMode ? (view.y - 1) + "-" : monthPrefix(pv.y, pv.m);
+    var unit = yearMode ? "year" : "month";
+    var s = collect(prefix), p = collect(prevPrefix);
+    var net = s.inc - s.exp;
+    var saved = s.inc > 0 ? Math.round(net / s.inc * 100) : null;
+
+    /* buckets for the cash-flow chart */
+    var buckets = [];
+    if (yearMode) {
+      for (var mi = 0; mi < 12; mi++) {
+        var bs = collect(monthPrefix(view.y, mi));
+        buckets.push({ inc: bs.inc, exp: bs.exp, label: MONTHS_S[mi], full: monthName(mi) + " " + view.y });
+      }
+    } else {
+      var dim = new Date(view.y, view.m + 1, 0).getDate();
+      for (var d = 1; d <= dim; d++) {
+        var bi = 0, be = 0;
+        (entries[keyOf(view.y, view.m, d)] || []).forEach(function (e) {
+          var a = Number(e.amount) || 0;
+          if (isInc(e)) bi += a; else if (isExp(e)) be += a;
+        });
+        var lab = (d === 1 || d === 8 || d === 15 || d === 22 || d === dim) ? String(d) : "";
+        buckets.push({ inc: bi, exp: be, label: lab, full: monthName(view.m, "short") + " " + d });
+      }
+    }
+    var max = 0;
+    buckets.forEach(function (b) { max = Math.max(max, b.inc, b.exp); });
+    var bh = function (v) { return v > 0 ? "max(2px," + (v / max * 100) + "%)" : "0"; };
+
+    var chart = '<div class="fchart" id="fchart">' + buckets.map(function (b, i) {
+      return '<button class="fc" data-i="' + i + '" aria-label="' + esc(b.full) + '">' +
+        '<span class="fu"><span class="fbi" style="height:' + bh(b.inc) + '"></span></span>' +
+        '<span class="fd"><span class="fbe" style="height:' + bh(b.exp) + '"></span></span></button>';
+    }).join("") + "</div>" +
+      '<div class="xl">' + buckets.map(function (b) { return "<span>" + b.label + "</span>"; }).join("") + "</div>";
+
+    var days = yearMode
+      ? ((view.y === now.getFullYear()) ? Math.floor((now - new Date(view.y, 0, 1)) / 864e5) + 1 : ((view.y % 4 === 0) ? 366 : 365))
+      : elapsedDays();
+    var big = s.biggest
+      ? fmtMoney(s.biggest.a) + '<div class="cnt">' + esc(s.biggest.c) + " &middot; " +
+        (function () { var q = s.biggest.k.split("-"); return monthName(+q[1] - 1, "short") + " " + (+q[2]); })() + "</div>"
+      : "&mdash;";
+
+    var html =
+      '<div class="card neu pad hero">' +
+        '<div class="cap">Net &middot; ' + (yearMode ? view.y : monthName(view.m) ) + "</div>" +
+        '<div class="big">' + (net > 0 ? "+" : "") + fmtMoney(net) + "</div>" +
+        '<div class="hsub">' + fmtMoney(s.inc) + " in &middot; " + fmtMoney(s.exp) + " out</div>" +
+      "</div>" +
+
+      '<div class="tiles">' +
+        '<div class="tilebox neu"><div class="cap" style="font-size:9px">Income</div><div class="val" style="margin-top:6px">' + fmtMoney(s.inc) + '</div><div class="cnt">' + changeLine(s.inc, p.inc, unit) + "</div></div>" +
+        '<div class="tilebox neu"><div class="cap" style="font-size:9px">Expenses</div><div class="val" style="margin-top:6px">' + fmtMoney(s.exp) + '</div><div class="cnt">' + changeLine(s.exp, p.exp, unit) + "</div></div>" +
+        '<div class="tilebox neu"><div class="cap" style="font-size:9px">Saved</div><div class="val" style="margin-top:6px">' + (saved == null ? "&mdash;" : saved + "%") + '</div><div class="cnt">of income kept</div></div>' +
+      "</div>" +
+
+      '<div class="card neu pad">' +
+        '<div class="ctitle"><span class="cap">Cash flow</span><span class="legend"><span><i class="sw i"></i>Income</span><span><i class="sw o"></i>Expenses</span></span></div>' +
+        '<div class="readout" id="readout">Tap a bar to see that ' + (yearMode ? "month" : "day") + ".</div>" +
+        (max > 0 ? chart : '<div class="empty">Nothing logged yet</div>') +
+      "</div>" +
+
+      '<div class="card neu pad"><div class="cap" style="margin-bottom:16px">Expenses by category</div>' + barList(s.cats, s.exp) + "</div>" +
+
+      '<div class="card neu pad"><div class="cap" style="margin-bottom:16px">Income by type</div>' +
+        barList({ Expected: s.expd, Unexpected: s.unexp }, s.inc) +
+        (s.unexp > 0 ? '<div class="cap" style="margin:20px 0 16px">Unexpected by source</div>' + barList(s.srcs, s.unexp) : "") +
+      "</div>" +
+
+      '<div class="card neu pad"><div class="cap" style="margin-bottom:16px">Spending by payment</div>' + barList(s.meth, s.exp) + "</div>" +
+
+      '<div class="card neu pad"><div class="cap" style="margin-bottom:16px">Stats</div><div class="stats">' +
+        '<div class="stat neu-in"><div class="cap" style="font-size:9px">Avg spend / day</div><div class="val" style="margin-top:6px">' + fmtMoney(Math.round(s.exp / days * 100) / 100) + "</div></div>" +
+        '<div class="stat neu-in"><div class="cap" style="font-size:9px">Avg income / day</div><div class="val" style="margin-top:6px">' + fmtMoney(Math.round(s.inc / days * 100) / 100) + "</div></div>" +
+        '<div class="stat neu-in"><div class="cap" style="font-size:9px">Biggest expense</div><div class="val" style="margin-top:6px">' + big + "</div></div>" +
+        '<div class="stat neu-in"><div class="cap" style="font-size:9px">Days with spending</div><div class="val" style="margin-top:6px">' + s.spendDays + '<span style="font-size:13px;color:#8b8d95"> / ' + days + "</span></div></div>" +
+      "</div></div>";
+
+    el("ov").innerHTML = html;
+
+    var fc = el("fchart");
+    if (fc) fc.querySelectorAll("[data-i]").forEach(function (b) {
+      b.onclick = function () {
+        var i = +b.getAttribute("data-i"), bk = buckets[i];
+        var on = b.classList.contains("on");
+        fc.querySelectorAll(".fc").forEach(function (x) { x.classList.remove("on"); });
+        if (on) { fc.classList.remove("sel"); el("readout").innerHTML = "Tap a bar to see that " + (yearMode ? "month" : "day") + "."; return; }
+        b.classList.add("on"); fc.classList.add("sel");
+        el("readout").innerHTML = "<b>" + esc(bk.full) + "</b><br>In <b>" + fmtMoney(bk.inc) + "</b> &middot; Out <b>" +
+          fmtMoney(bk.exp) + "</b> &middot; Net <b>" + (bk.inc - bk.exp > 0 ? "+" : "") + fmtMoney(bk.inc - bk.exp) + "</b>";
+      };
+    });
   }
 
   /* ── sheet ── */
@@ -368,29 +685,55 @@ input { font-family: inherit; }
   function btnText() {
     var a = parseFloat(form.amount);
     if (!(a > 0)) return { ok: false, label: "Enter an amount" };
-    var parts = [fmtMoney(a), CATS[form.cat]];
-    if (form.cat === "unexpected" && form.source) parts.push(form.source);
+    var parts = [fmtMoney(a)];
+    if (tab === "expense") {
+      parts.push(form.category || "Other");
+    } else {
+      parts.push(INC[form.cat]);
+      if (form.cat === "unexpected" && form.source) parts.push(form.source);
+    }
     if (form.method) parts.push(form.method);
     return { ok: true, label: "Log " + parts.map(esc).join(" &middot; ") };
   }
 
-  function chipRow(items, current, attr) {
+  function chipRow(items, current, attr, extra) {
     return '<div class="chips">' + items.map(function (n) {
       return '<button class="chip ' + (current === n ? "dark" : "neu-sm press") + '" ' + attr + '="' + esc(n) + '">' + esc(n) + "</button>";
-    }).join("") + "</div>";
+    }).join("") + (extra || "") + "</div>";
+  }
+
+  function sourceBlock() {
+    var h = '<div class="lrow"><span class="cap">Source <span class="opt">&middot; optional</span></span>' +
+      '<button class="lnk" id="srcEdit">' + (form.editSrc ? "Done" : "Edit") + "</button></div>";
+    if (form.editSrc) {
+      h += '<div class="chips">' + settings.sources.map(function (n) {
+        return n === "Other"
+          ? '<button class="chip neu-in" disabled style="opacity:.5">Other</button>'
+          : '<button class="chip rm neu-sm press" data-rmsrc="' + esc(n) + '">&#10005; ' + esc(n) + "</button>";
+      }).join("") + "</div>";
+    } else {
+      h += chipRow(settings.sources, form.source, "data-source",
+        form.adding ? "" : '<button class="chip addc" id="srcAdd">+ Add</button>');
+      if (form.adding) {
+        h += '<div class="newsrc"><input class="fld" id="fNewSrc" type="text" maxlength="24" placeholder="New source">' +
+          '<button class="dark" id="srcSave">Save</button></div>';
+      }
+    }
+    return h;
   }
 
   function renderSheet() {
     var k = sheetKey;
     if (!k) return;
-    var list = moneyList(k);
+    var list = listFor(k);
+    var expMode = tab === "expense";
 
     var p = k.split("-");
     var label = new Date(+p[0], +p[1] - 1, +p[2])
       .toLocaleDateString("en-US", { weekday: "long", month: "long", day: "numeric" });
 
     var html = '<div class="grab"></div>' +
-      '<div class="shead"><div><div class="cap" style="margin-bottom:4px">Log</div>' +
+      '<div class="shead"><div><div class="cap" style="margin-bottom:4px">' + (expMode ? "Expense" : "Income") + "</div>" +
       '<div class="sdate">' + label + "</div></div>" +
       '<button class="x neu-sm press" id="shClose" aria-label="Close">&#10005;</button></div>';
 
@@ -399,27 +742,36 @@ input { font-family: inherit; }
       list.forEach(function (e) { t += Number(e.amount) || 0; });
       html += '<div class="cap mb8">Logged &middot; ' + fmtMoney(t) + "</div>";
       html += '<div class="entries">' + list.map(function (e) {
-        var extra = [];
-        if (e.type === "unexpected" && e.source) extra.push(esc(e.source));
+        var extra = [], name, dotc;
+        if (expMode) {
+          name = esc(e.category || "Other"); dotc = "o";
+        } else {
+          name = INC[e.type]; dotc = e.type === "expected" ? "e" : "u";
+          if (e.type === "unexpected" && e.source) extra.push(esc(e.source));
+        }
         if (e.method) extra.push(esc(e.method));
         return '<div class="entry neu-sm">' +
-          '<span class="dot ' + (e.type === "expected" ? "e" : "u") + '"></span>' +
-          '<span class="name">' + CATS[e.type] + (extra.length ? " <span>&middot; " + extra.join(" &middot; ") + "</span>" : "") + "</span>" +
-          '<span class="h">' + fmtMoney(e.amount) + "</span>" +
+          '<span class="dot ' + dotc + '"></span>' +
+          '<span class="name">' + name + (extra.length ? " <span>&middot; " + extra.join(" &middot; ") + "</span>" : "") + "</span>" +
+          '<span class="h">' + (expMode ? "−" : "") + fmtMoney(e.amount) + "</span>" +
           '<button class="del press neu-sm" data-del="' + esc(e.id) + '" aria-label="Delete entry">&#10005;</button>' +
           "</div>";
       }).join("") + "</div>";
     }
 
-    html += '<div class="seg neu-in">' + Object.keys(CATS).map(function (c) {
-      return '<button data-cat="' + c + '" class="' + (form.cat === c ? "dark" : "") + '">' + CATS[c] + "</button>";
-    }).join("") + "</div>";
+    if (!expMode) {
+      html += '<div class="seg neu-in">' + Object.keys(INC).map(function (c) {
+        return '<button data-cat="' + c + '" class="' + (form.cat === c ? "dark" : "") + '">' + INC[c] + "</button>";
+      }).join("") + "</div>";
+    }
 
     html += '<div class="cap mb8">Amount</div><div class="amtwrap"><span class="cur">' + CUR + '</span>' +
       '<input class="fld" id="fAmount" type="number" inputmode="decimal" min="0" step="0.01" placeholder="0" value="' + esc(form.amount) + '"></div>';
 
-    if (form.cat === "unexpected") {
-      html += '<div class="cap mb8">Source <span class="opt">&middot; optional</span></div>' + chipRow(SOURCES, form.source, "data-source");
+    if (expMode) {
+      html += '<div class="cap mb8">Category <span class="opt">&middot; optional</span></div>' + chipRow(EXP_CATS, form.category, "data-category");
+    } else if (form.cat === "unexpected") {
+      html += sourceBlock();
     }
     html += '<div class="cap mb8">Paid via <span class="opt">&middot; optional</span></div>' + chipRow(METHODS, form.method, "data-method");
 
@@ -437,8 +789,19 @@ input { font-family: inherit; }
     sh.querySelectorAll("[data-source]").forEach(function (x) {
       x.onclick = function () { var v = x.getAttribute("data-source"); form.source = form.source === v ? null : v; renderSheet(); };
     });
+    sh.querySelectorAll("[data-category]").forEach(function (x) {
+      x.onclick = function () { var v = x.getAttribute("data-category"); form.category = form.category === v ? null : v; renderSheet(); };
+    });
     sh.querySelectorAll("[data-method]").forEach(function (x) {
       x.onclick = function () { var v = x.getAttribute("data-method"); form.method = form.method === v ? null : v; renderSheet(); };
+    });
+    sh.querySelectorAll("[data-rmsrc]").forEach(function (x) {
+      x.onclick = function () {
+        var v = x.getAttribute("data-rmsrc");
+        settings.sources = settings.sources.filter(function (s) { return s !== v; });
+        if (form.source === v) form.source = null;
+        saveSettings(); renderSheet();
+      };
     });
     sh.querySelectorAll("[data-del]").forEach(function (x) {
       x.onclick = function () {
@@ -448,6 +811,23 @@ input { font-family: inherit; }
         save(); renderSheet(); render();
       };
     });
+
+    var se = el("srcEdit");
+    if (se) se.onclick = function () { form.editSrc = !form.editSrc; form.adding = false; renderSheet(); };
+    var sa = el("srcAdd");
+    if (sa) sa.onclick = function () { form.adding = true; renderSheet(); var f = el("fNewSrc"); if (f) f.focus(); };
+    var ss = el("srcSave"), nf = el("fNewSrc");
+    function commitSource() {
+      var v = (nf.value || "").trim();
+      if (v) {
+        var hit = settings.sources.filter(function (s) { return s.toLowerCase() === v.toLowerCase(); })[0];
+        if (!hit) { addSource(v); hit = v; saveSettings(); }
+        form.source = hit;
+      }
+      form.adding = false; renderSheet();
+    }
+    if (ss) ss.onclick = commitSource;
+    if (nf) nf.onkeydown = function (ev) { if (ev.key === "Enter") commitSource(); };
 
     /* amount input updates state without re-rendering, so the keyboard stays up */
     var amtIn = el("fAmount");
@@ -463,13 +843,18 @@ input { font-family: inherit; }
       if (!entries[k]) entries[k] = [];
       var rec = {
         id: Date.now() + "-" + Math.random().toString(36).slice(2,7),
-        type: form.cat,
         amount: Math.round(a * 100) / 100
       };
-      if (form.cat === "unexpected" && form.source) rec.source = form.source;
+      if (expMode) {
+        rec.type = "expense";
+        rec.category = form.category || "Other";
+      } else {
+        rec.type = form.cat;
+        if (form.cat === "unexpected" && form.source) rec.source = form.source;
+      }
       if (form.method) rec.method = form.method;
       entries[k].push(rec);
-      resetForm(form.cat);
+      resetForm({ cat: form.cat });
       save(); renderSheet(); render();
     };
   }
