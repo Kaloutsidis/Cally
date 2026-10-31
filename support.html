@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#EDEEF1">
+<meta name="description" content="Help for Cally on iPhone: signing in, sign-in codes, using two iPhones, deleting your account, importing from the web app, currency, the lock and contact.">
+<title>Support · Cally</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Crect width='30' height='30' rx='9' fill='%2316171B'/%3E%3Cpath d='M20.13 20.47A7.5 7.5 0 1 1 20.13 9.53' fill='none' stroke='%23DCDEE3' stroke-width='3.6' stroke-linecap='round'/%3E%3Ccircle cx='22.5' cy='15' r='1.95' fill='%23DCDEE3'/%3E%3C/svg%3E">
+<style>
+  :root {
+    --canvas: #EDEEF1;
+    --sheet: #FFFFFF;
+    --ink: #16171B;
+    --text: #1D1E22;
+    --secondary: #50525A;
+    --tertiary: #666870;
+    --hairline: #E1E2E6;
+    --on-ink: #F4F5F8;
+    --on-ink-dim: #A3A6AD;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--canvas);
+    color: var(--text);
+    font: 17px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    overflow-wrap: break-word;
+  }
+  .wrap {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 32px max(16px, env(safe-area-inset-right)) calc(40px + env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  }
+  .brand { display: flex; align-items: center; gap: 10px; margin: 0 0 28px; }
+  .brand svg { width: 30px; height: 30px; flex: none; }
+  .eyebrow {
+    margin: 0;
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--secondary);
+  }
+  h1 { margin: 0 0 6px; font-size: 34px; line-height: 1.1; font-weight: 800; letter-spacing: -.02em; color: var(--ink); }
+  .meta { margin: 0 0 24px; font-size: 15px; color: var(--tertiary); }
+  .contact {
+    margin: 0 0 14px;
+    padding: 20px 22px;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #2E2F35, #111216);
+    color: var(--on-ink);
+  }
+  .contact .eyebrow { margin-bottom: 8px; color: var(--on-ink-dim); }
+  .contact p { margin: 0 0 14px; }
+  .button {
+    display: inline-block;
+    max-width: 100%;
+    padding: 11px 18px;
+    border-radius: 14px;
+    background: var(--on-ink);
+    color: var(--ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .button:focus-visible { outline: 2px solid var(--on-ink); outline-offset: 3px; }
+  .sheet {
+    padding: 2px 22px;
+    border-radius: 22px;
+    background: var(--sheet);
+    box-shadow: 0 1px 2px rgba(22, 23, 27, .05), 0 10px 30px rgba(22, 23, 27, .06);
+  }
+  section { padding: 22px 0; border-top: 1px solid var(--hairline); scroll-margin-top: 16px; }
+  section:first-child { border-top: 0; }
+  h2 { margin: 0 0 8px; font-size: 19px; line-height: 1.3; font-weight: 700; letter-spacing: -.01em; color: var(--ink); }
+  p { margin: 0 0 10px; }
+  ul, ol { margin: 0 0 10px; padding-left: 22px; }
+  li { margin: 6px 0; }
+  li::marker { color: var(--tertiary); }
+  section > :last-child { margin-bottom: 0; }
+  b { font-weight: 650; color: var(--ink); }
+  .note { font-size: 15px; color: var(--tertiary); }
+  a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    text-decoration-color: rgba(22, 23, 27, .35);
+  }
+  a:hover { text-decoration-color: currentColor; }
+  a:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; border-radius: 4px; }
+  footer { margin-top: 28px; font-size: 14px; line-height: 1.7; text-align: center; color: var(--tertiary); }
+  footer a { color: var(--secondary); }
+  @media (max-width: 420px) {
+    body { font-size: 16px; }
+    h1 { font-size: 30px; }
+    .sheet { padding: 0 18px; }
+    .contact { padding: 18px; }
+  }
+  @media print {
+    body { background: #fff; }
+    .sheet { box-shadow: none; padding: 0; }
+    .contact { background: #fff; color: var(--text); border: 1px solid var(--hairline); }
+    .button { padding: 0; background: none; text-decoration: underline; }
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="brand">
+    <svg viewBox="0 0 30 30" aria-hidden="true" focusable="false">
+      <defs>
+        <linearGradient id="mark" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#2E2F35"/>
+          <stop offset="1" stop-color="#111216"/>
+        </linearGradient>
+      </defs>
+      <rect width="30" height="30" rx="9" fill="url(#mark)"/>
+      <path d="M20.13 20.47A7.5 7.5 0 1 1 20.13 9.53" fill="none" stroke="#DCDEE3" stroke-width="3.6" stroke-linecap="round"/>
+      <circle cx="22.5" cy="15" r="1.95" fill="#DCDEE3"/>
+    </svg>
+    <span class="eyebrow">Cally</span>
+  </header>
+
+  <h1>Support</h1>
+  <p class="meta">Help for Cally on iPhone (iOS 17 or later)</p>
+
+  <div class="contact">
+    <h2 class="eyebrow">Need help?</h2>
+    <p>Questions, bugs and ideas are all welcome. Cally is made by one developer, Nikos Kaloutsidis.</p>
+    <a class="button" href="mailto:support@cally.website">Email support@cally.website</a>
+  </div>
+
+  <div class="sheet">
+    <section id="account">
+      <h2>How do I sign in?</h2>
+      <p>Cally needs an account so your entries are saved and sync between your iPhones. On the welcome screen, choose one:</p>
+      <ul>
+        <li><b>Continue with Apple</b> signs you in with your Apple ID.</li>
+        <li><b>Continue with Google</b> opens Google’s sign-in page.</li>
+        <li><b>Continue with email:</b> enter your email address, tap <b>Send code</b>, then type the 8-digit code from the email.</li>
+      </ul>
+      <p class="note">There’s no password, and Cally never asks for your phone number. Your first sign-in creates your account.</p>
+    </section>
+
+    <section id="code">
+      <h2>I didn’t get the sign-in code</h2>
+      <ul>
+        <li>Check your spam or junk folder.</li>
+        <li>Wait a minute. Emails can take a moment to arrive.</li>
+        <li>Still nothing? Tap <b>Send a new code</b> (it’s available a minute after the last one) and use the newest code.</li>
+        <li>If the address has a typo, tap <b>Use a different email</b>.</li>
+      </ul>
+      <p class="note">Each code works for 10 minutes. Never share it with anyone: Cally will never ask you for it.</p>
+    </section>
+
+    <section id="new-iphone">
+      <h2>How do I use Cally on a new or second iPhone?</h2>
+      <p>Install Cally on that iPhone and sign in the same way as before, with the same Apple ID, Google account or email address. Your entries, income sources and currency come across, and changes sync both ways.</p>
+      <p class="note">Cally keeps working offline. Changes you make without a connection sync when you’re back online.</p>
+    </section>
+
+    <section id="hide-my-email">
+      <h2>What does Hide My Email do?</h2>
+      <p>The first time you continue with Apple, Apple lets you choose <b>Hide My Email</b>. If you do, Cally gets a private relay address from Apple instead of your real email address. Cally works the same either way.</p>
+      <p class="note">To reach the same account on another iPhone, continue with Apple there too, with the same Apple ID.</p>
+    </section>
+
+    <section id="delete-account">
+      <h2>How do I delete my account?</h2>
+      <p>Go to <b>Settings → Delete account</b> and confirm. This permanently deletes your account and all its entries, right away. Other iPhones signed in to it are signed out the next time Cally connects on them, and their copies are deleted. If you signed in with Apple, Apple asks you to confirm once more. Cally then attempts to revoke its Sign in with Apple access. Your Cally account is deleted even if that revocation fails.</p>
+      <p class="note">This can’t be undone, so export a backup first if you might want your entries later. Deleting the app doesn’t delete your account. If you sign in again after deleting your account, you start with a new, empty one.</p>
+    </section>
+
+    <section id="sign-out">
+      <h2>What happens when I sign out?</h2>
+      <p>Go to <b>Settings → Sign out</b>. Cally deletes its copy of your entries from this iPhone. Your account isn’t affected: everything that has synced stays in it, and signing in again brings it back. Your other iPhones stay signed in.</p>
+      <p class="note">If some changes haven’t synced yet, Cally tries to send them first. If it can’t, for example while you’re offline, it warns you before signing out, because those changes would be lost.</p>
+    </section>
+
+    <section id="web-app">
+      <h2>How do I bring in my data from the Cally web app?</h2>
+      <ol>
+        <li>In the Cally web app, open <b>Overview</b>, scroll to <b>Backup</b> and tap <b>Save backup</b>. Choose <b>Save to Files</b>, for example to iCloud Drive. (If Safari downloads it instead, it’s in Files → Downloads.)</li>
+        <li>In the Cally iPhone app, go to <b>Settings → Import</b> and pick that file.</li>
+      </ol>
+      <p class="note">Your income and expense entries and your income sources come across and are added to your account, so they sync to your other iPhones. Nothing changes in the web app. Import also accepts backups exported from the Cally iPhone app, and importing the same file twice won’t create duplicates.</p>
+    </section>
+
+    <section id="currency">
+      <h2>How do I change the currency?</h2>
+      <p>Go to <b>Settings → Currency</b> and pick one. This changes the symbol only. Amounts aren’t converted, so an entry of €50 will show as $50. The currency is saved to your account, so it’s the same on all your iPhones.</p>
+    </section>
+
+    <section id="lock">
+      <h2>How do I turn on the lock?</h2>
+      <p>Go to <b>Settings</b> and turn on <b>Lock with Face ID</b>. On iPhones with Touch ID it says Touch ID; without either, passcode. Confirm once, and from then on Cally asks every time it opens or comes back from the background. It also hides your amounts in the app switcher.</p>
+      <p class="note">Your iPhone needs a passcode for the lock to work. If Face ID doesn’t recognize you, you can use your iPhone passcode. The lock is set separately on each iPhone. To turn it off, use the same switch.</p>
+    </section>
+
+    <section id="delete">
+      <h2>How do I delete entries?</h2>
+      <ul>
+        <li><b>One entry:</b> tap its day, then tap the × next to the entry. You can undo right after. It’s removed on all your iPhones.</li>
+        <li><b>All entries:</b> go to <b>Settings → Delete all entries</b> and confirm. This removes every entry and the income sources you added, on all your iPhones, but keeps your account. Export a backup first if you might need it.</li>
+        <li><b>Everything, including your account:</b> see <a href="#delete-account">How do I delete my account?</a></li>
+      </ul>
+      <p class="note">Files you exported are separate copies. Delete those in the Files app.</p>
+    </section>
+
+    <section id="contact">
+      <h2>How do I contact you?</h2>
+      <p>Email <a href="mailto:support@cally.website">support@cally.website</a>. If something isn’t working, please include your iPhone model, iOS version, Cally version (shown at the bottom of Settings) and how you sign in (Apple, Google or email).</p>
+      <p class="note">Support messages are forwarded through ImprovMX to my Gmail inbox. See the <a href="privacy.html">Privacy Policy</a> for details.</p>
+      <p class="note">Please don’t attach a backup file unless I ask for one. It contains all your entries.</p>
+    </section>
+  </div>
+
+  <footer>
+    <a href="privacy.html">Privacy Policy</a> · © 2026 Nikos Kaloutsidis
+  </footer>
+</main>
+</body>
+</html>
