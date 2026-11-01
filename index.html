@@ -3,33 +3,55 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#edeef1">
-  <meta name="description" content="A calendar for your money. Cally brings income, expenses and a clearer view of your month together on iPhone. Currently in TestFlight.">
+  <meta name="theme-color" content="#f7f7f5">
+  <meta name="description" content="A calendar for your money. Cally brings income, expenses and a clearer view of your month together on iPhone.">
   <meta property="og:title" content="Cally — a calendar for your money">
-  <meta property="og:description" content="A little less guessing. A clearer view of your everyday money. Made for iPhone, currently in TestFlight.">
+  <meta property="og:description" content="A little less guessing. A clearer view of your everyday money. Made for iPhone.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://cally.website/">
+  <meta property="og:image" content="https://cally.website/assets/cally-banner.png">
+  <meta property="og:image:width" content="1916">
+  <meta property="og:image:height" content="821">
+  <meta property="og:image:alt" content="The official Cally banner: graphite sculptures in a silver-white studio.">
+  <meta name="twitter:card" content="summary_large_image">
   <title>Cally — A calendar for your money</title>
-  <link rel="icon" href="assets/app-icon.png">
-  <link rel="apple-touch-icon" href="assets/app-icon.png">
+  <link rel="icon" type="image/png" href="assets/favicon.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/brand.css">
   <script src="assets/site.js" defer></script>
+  <link rel="manifest" href="site.webmanifest">
+  <script src="assets/brand-motion.js" defer></script>
 </head>
-<body>
+<body class="brand-refresh">
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header">
     <div class="container nav">
-      <a class="brand" href="index.html" aria-label="Cally home"><img src="assets/app-icon.png" width="37" height="37" alt="">Cally</a>
-      <nav class="nav-links" aria-label="Main navigation"><a href="#tour">The app</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a><a class="nav-contact" href="#availability">Coming to iPhone <span aria-hidden="true">↗</span></a></nav>
+      <a class="brand" href="index.html" aria-label="Cally home"><img src="assets/cally-icon.png" width="37" height="37" alt=""><span>CALLY</span></a>
+      <nav class="nav-links" aria-label="Main navigation"><a href="#tour">The app</a><a href="privacy.html">Privacy</a><a href="support.html">Support</a><a class="nav-contact" href="#availability">Explore Cally <span aria-hidden="true">↗</span></a></nav>
     </div>
   </header>
   <main id="main">
-    <section class="container hero" aria-labelledby="hero-title">
+    <section class="brand-experience" aria-label="Cally in perspective">
+      <div class="brand-scene" data-brand-scene>
+        <img class="scene-environment" src="assets/brand-stage.jpg" width="1942" height="809" alt="" fetchpriority="high" aria-hidden="true">
+        <div class="scene-copy">
+          <p class="eyebrow">Made for iPhone</p>
+          <h1>Your money.<br>In perspective.</h1>
+          <p>Income, expenses and the days in between. A calmer way to see your money, one day at a time.</p>
+          <div class="actions"><a class="button button-dark" href="#tour">Explore Cally <span aria-hidden="true">↓</span></a><a class="text-link" href="support.html">A little help <span aria-hidden="true">↗</span></a></div>
+          <p class="scene-footnote">For iPhone · iOS 17 or later</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="container hero app-intro" aria-labelledby="hero-title">
       <div class="hero-copy">
-        <div class="availability-pill">Made for iPhone. Currently in TestFlight.</div>
-        <h1 id="hero-title">Your money.<br><span>Meet your<br>calendar.</span></h1>
+        <p class="eyebrow">A calendar for your money</p>
+        <h2 id="hero-title">Small details.<br><span>A clearer<br>month.</span></h2>
         <p>Income, expenses and the days in between. A simple place to keep track of your money and see your month more clearly.</p>
         <div class="actions"><a class="button button-dark" href="#tour">Explore Cally <span aria-hidden="true">↓</span></a><a class="text-link" href="support.html">A little help <span aria-hidden="true">↗</span></a></div>
-        <p class="hero-footnote">For iPhone, iOS 17 or later.<br>The App Store release is being prepared.</p>
+
       </div>
       <div class="hero-stage" aria-label="Real screens from the Cally iPhone app">
         <div class="phone hero-phone-side"><img src="assets/screens/02-net-and-savings.png" width="1206" height="2622" alt="Cally’s monthly overview with net income and savings rate."></div>
@@ -68,12 +90,11 @@
       <ul class="privacy-list"><li><span class="tick" aria-hidden="true">✓</span>No advertising, analytics or tracking in the app.</li><li><span class="tick" aria-hidden="true">✓</span>Account data is used for accounts, sync and security. Never sold.</li><li><span class="tick" aria-hidden="true">✓</span>No access to your bank, contacts or photos.</li><li><span class="tick" aria-hidden="true">✓</span>Export your entries or delete your account in Settings.</li></ul>
     </section>
     <section class="container availability" id="availability" aria-labelledby="availability-heading">
-      <img class="app-icon" src="assets/app-icon.png" width="72" height="72" loading="lazy" alt="Cally app icon">
-      <p class="eyebrow">A calendar for your money</p><h2 id="availability-heading">A clearer month<br>is on its way.</h2>
-      <p>Cally is currently being tested in TestFlight and is not yet available on the App Store. Have a question about the app? I’d be happy to hear from you.</p>
-      <a class="button button-dark" href="mailto:support@cally.website">Say hello <span aria-hidden="true">↗</span></a><p class="small">Made by Nikos Kaloutsidis · iPhone · iOS 17+</p>
+      <p class="eyebrow">A calendar for your money</p><h2 id="availability-heading">Make room<br>for clarity.</h2>
+      <p>A simple place for the everyday details. Keep your income and expenses together, see the bigger picture, and make your month feel a little clearer.</p>
+      <a class="button button-dark" href="mailto:support@cally.website">Contact Cally <span aria-hidden="true">↗</span></a><p class="small">Made by Nikos Kaloutsidis · iPhone · iOS 17+</p>
     </section>
   </main>
-  <footer class="site-footer"><div class="container"><div class="footer-top"><a class="brand" href="index.html"><img src="assets/app-icon.png" width="31" height="31" alt="">Cally</a><nav class="footer-links" aria-label="Footer"><a href="privacy.html">Privacy policy</a><a href="support.html">Support</a><a href="https://kaloutsidis.github.io/Cally/web/">Original web app <span aria-hidden="true">↗</span></a></nav></div><div class="footer-bottom"><p>© 2026 Nikos Kaloutsidis.</p><p class="legacy-note">Already using Cally in your browser? <a href="https://kaloutsidis.github.io/Cally/web/">Your web app is still here.</a></p></div></div></footer>
+  <footer class="site-footer"><div class="container"><div class="footer-top"><p class="footer-caption">A calendar for your money.</p><nav class="footer-links" aria-label="Footer"><a href="privacy.html">Privacy policy</a><a href="support.html">Support</a><a href="https://kaloutsidis.github.io/Cally/web/">Original web app <span aria-hidden="true">↗</span></a></nav></div><div class="footer-bottom"><p>© 2026 Nikos Kaloutsidis.</p><p class="legacy-note">Already using Cally in your browser? <a href="https://kaloutsidis.github.io/Cally/web/">Your web app is still here.</a></p></div></div></footer>
 </body>
 </html>
