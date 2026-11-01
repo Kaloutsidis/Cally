@@ -7,12 +7,12 @@
   "theme_color": "#f7f7f5",
   "icons": [
     {
-      "src": "assets/cally-icon-192.png",
+      "src": "assets/cally-logo-192.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "assets/cally-icon.png",
+      "src": "assets/cally-logo.png",
       "sizes": "512x512",
       "type": "image/png"
     }
