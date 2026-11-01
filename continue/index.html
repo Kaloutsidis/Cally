@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#edeef1">
+  <meta name="robots" content="noindex, nofollow, noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Cache-Control" content="no-store">
+  <meta http-equiv="Pragma" content="no-cache">
+  <title>Your sign-in code · Cally</title>
+  <script id="cally-code-script">
+  (() => {
+    // Fragments stay in the browser. Remove it before displaying or using its value.
+    let fragment = '';
+    let scrubbed = false;
+    try {
+      fragment = window.location.hash;
+      window.history.replaceState(null, '', window.location.pathname);
+      scrubbed = true;
+    } catch {
+      // If the address cannot be cleared, keep the code hidden.
+    }
+    const match = scrubbed ? /^#code=([0-9]{6})$/.exec(fragment) : null;
+    const code = match ? match[1] : null;
+    fragment = '';
+    function ready() {
+      if (!code) return;
+      const value = document.getElementById('sign-in-code');
+      const copy = document.getElementById('copy-code');
+      const status = document.getElementById('copy-status');
+      value.textContent = code;
+      document.getElementById('code-valid').hidden = false;
+      document.getElementById('code-missing').hidden = true;
+      function selectCode() {
+        const selection = window.getSelection();
+        if (selection) {
+          const range = document.createRange();
+          range.selectNodeContents(value);
+          selection.removeAllRanges();
+          selection.addRange(range);
+          status.textContent = 'Code selected. Choose Copy, then return to Cally.';
+        } else {
+          status.textContent = 'Select the code above and choose Copy, or type it in Cally.';
+        }
+      }
+      copy.addEventListener('click', async () => {
+        try {
+          if (!navigator.clipboard || !navigator.clipboard.writeText) {
+            selectCode();
+            return;
+          }
+          await navigator.clipboard.writeText(code);
+          copy.textContent = 'Copied';
+          status.textContent = 'Copied. Open Cally and paste the code into the sign-in field.';
+        } catch {
+          selectCode();
+        }
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', ready, { once: true });
+    else ready();
+  })();
+  </script>
+  <link rel="icon" href="../assets/app-icon.png">
+  <link rel="stylesheet" href="../assets/styles.css">
+  <style>
+    [hidden]{display:none!important}.code-page{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:44px 20px}.code-wrap{width:min(100%,440px);text-align:center}.code-brand{justify-content:center;margin-bottom:43px}.code-card{background:linear-gradient(140deg,#f7f8fa,#e5e7ed);border:1px solid #fff;border-radius:30px;box-shadow:var(--shadow);padding:35px 29px}.code-card h1{font-size:31px;letter-spacing:-.045em;line-height:1.15;font-weight:650;margin:0 0 15px}.code-intro{color:var(--body);font-size:13px;line-height:1.8;margin:0 0 25px}.code-number{display:block;background:#e5e7ed;box-shadow:inset 4px 4px 9px #d0d3dc,inset -4px -4px 9px #fff;border-radius:18px;padding:22px 10px;font-size:clamp(37px,10vw,49px);font-weight:650;letter-spacing:.16em;text-indent:.16em;font-variant-numeric:tabular-nums;line-height:1.25;user-select:all;-webkit-user-select:all;margin:0 0 20px}.code-card .button{width:100%;cursor:pointer}.code-card .open-app{margin-top:13px;background:transparent;border-color:#c9cdd6;color:var(--ink);box-shadow:none}.copy-status{font-size:11px;line-height:1.8;min-height:39px;color:var(--muted);margin:18px 0 0}.code-guidance{font-size:13px;line-height:1.85;color:var(--body);margin:0 0 20px}.code-help{font-size:11px;line-height:1.85;color:var(--body);margin:20px 0 0;padding-top:20px;border-top:1px solid #d2d5dd}.code-help b{font-weight:650}.code-privacy{font-size:10px;line-height:1.8;color:var(--muted);max-width:360px;margin:24px auto 0}.code-footer{display:flex;justify-content:center;gap:25px;margin-top:28px}.code-footer a{font-size:11px;text-underline-offset:4px;min-height:44px;display:inline-flex;align-items:center}.code-page .eyebrow{font-size:10px;margin-bottom:13px}@media(max-width:360px){.code-card{padding:29px 23px}.code-card h1{font-size:28px}}@media print{.code-number{font-size:42px}.code-brand,.code-footer,.code-privacy,.code-card .button{display:none}}
+  </style>
+</head>
+<body>
+  <main class="code-page">
+    <div class="code-wrap">
+      <a class="brand code-brand" href="../index.html" aria-label="Cally home"><img src="../assets/app-icon.png" width="37" height="37" alt="">Cally</a>
+      <div class="code-card">
+        <div id="code-valid" hidden>
+          <p class="eyebrow">Back to your calendar</p>
+          <h1>Your sign-in code.</h1>
+          <p class="code-intro">Copy this code, then return to Cally and paste it into the sign-in field.</p>
+          <output class="code-number" id="sign-in-code" aria-label="Your six-digit sign-in code" tabindex="0"></output>
+          <button class="button button-dark" id="copy-code" type="button">Copy code</button>
+          <a class="button open-app" href="cally://" rel="noreferrer">Open Cally <span aria-hidden="true">↗</span></a>
+          <p class="copy-status" id="copy-status" role="status" aria-live="polite">Your code expires 10 minutes after the email was sent.</p>
+          <p class="code-help">If the email form isn’t open, choose <b>Continue with email</b>, enter the same email address, then choose <b>I already have a code</b> and <b>Paste</b>.<br><br>If Cally doesn’t open, return to it from your Home Screen. If it isn’t installed, use the installation instructions from your tester contact.</p>
+        </div>
+        <div id="code-missing">
+          <p class="eyebrow">Let’s get you back</p>
+          <h1>Need a fresh code?</h1>
+          <p class="code-guidance">Open Cally and request a new sign-in code. You can also type the code from your latest email directly in the app.</p>
+          <a class="button button-dark" href="cally://" rel="noreferrer">Open Cally <span aria-hidden="true">↗</span></a>
+          <p class="copy-status">If Cally doesn’t open, return to it from your Home Screen. If it isn’t installed, use the installation instructions from your tester contact.</p>
+        </div>
+      </div>
+      <p class="code-privacy">Your code is shown only for this visit and is not saved by this page. Copy it only if you requested a sign-in.</p>
+      <nav class="code-footer" aria-label="Help"><a href="../support.html">Need help?</a><a href="../privacy.html">Privacy policy</a></nav>
+    </div>
+  </main>
+</body>
+</html>
